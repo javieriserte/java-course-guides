@@ -43,6 +43,8 @@
 \usepackage{graphicx}						% Para manejar los gráficos
 \usepackage{fancyhdr}						% Para manejar encabezados y pie de páginas
 \usepackage{lastpage}						% Crea una referencia a la última página. Util para numerar páginas de la forma "página x de y"
+%\usepackage{pageslts}						% Crea una referencia a la última página. Util para numerar páginas de la forma "página x de y"
+
 \usepackage{listings}
 %\usepackage[final]{ps4pdf} 	  % para incluir archivos eps dentro del documento pdf
 \usepackage{array}
@@ -83,12 +85,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \headheight=14pt																													% Creo el encabezado y pie página que quiero.
 \renewcommand{\headrulewidth}{0.4pt}																			% Creo el encabezado y pie página que quiero.
-\renewcommand{\footrulewidth}{0.4pt}																			% Creo el encabezado y pie página que quiero.
-\pagestyle{fancy}%																												% Creo el encabezado y pie página que quiero.
+\renewcommand{\footrulewidth}{0.4pt}																		% Creo el encabezado y pie página que quiero.
+\pagestyle{fancy}%																										% Creo el encabezado y pie página que quiero.
 \fancyfoot{}																															% Creo el encabezado y pie página que quiero.
-\lfoot{\footnotesize{P�gina \thepage\ de \pageref{LastPage}}}							% Creo el encabezado y pie página que quiero.
+\lfoot{\footnotesize{P�gina \thepage\ de \pageref{LastPage}}}						% Creo el encabezado y pie página que quiero.
 \lhead{\footnotesize{\materiaName}}																				% Creo el encabezado y pie página que quiero.
-\rhead{\footnotesize{\fecha\  - \seminarioName}}													% Creo el encabezado y pie página que quiero.
+\rhead{\footnotesize{\fecha\  - \seminarioName}}												% Creo el encabezado y pie página que quiero.
 
 % Fuentes
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -248,7 +250,5 @@ p�blicos (\textit{public}) y los dem�s m�todos protejidos (\textit{protected}).
 \section{Ejercicio 3 - Juego de Hanoi}
 \section{Ejercicio 4 - Representaci�n de terrenos con precisi�n variable}
 \section{Ejercicio 5 - Mapa de rangos}
-
-\section{}
 
 \end{document}
