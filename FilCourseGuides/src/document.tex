@@ -1,19 +1,254 @@
-%%This is a very basic article template.
-%%There is just one section and two subsections.
-\documentclass{article}
+%% Based on a TeXnicCenter-Templat%% Based on a TeXnicCenter-Template by Gyorgy SZEIDL.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%------------------------------------------------------------
+%
+\documentclass[a4paper, twoside]{article}%
+%Options -- Point size:  10pt (default), 11pt, 12pt
+%        -- Paper size:  letterpaper (default), a4paper, a5paper, b5paper
+%                        legalpaper, executivepaper
+%        -- Orientation  (portrait is the default)
+%                        landscape
+%        -- Print size:  oneside (default), twoside
+%        -- Quality      final(default), draft
+%        -- Title page   notitlepage, titlepage(default)
+%        -- Columns      onecolumn(default), twocolumn
+%        -- Equation numbering (equation numbers on the right is the default)
+%                        leqno
+%        -- Displayed equations (centered is the default)
+%                        fleqn (equations start at the same distance from the right side)
+%        -- Open bibliography style (closed is the default)
+%                        openbib
+% For instance the command \ documentclass[a4paper,12pt,leqno]{article}
+% ensures that the paper size is a4, the fonts are typeset at the size 12p
+% and the equation numbers are on the left side
+%
+
+% Lista de Paquetes
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{pifont}             % Maneja Fuentes 
+%\usepackage{PTSans}            % Maneja Fuentes Sans Serif
+%\usepackage{skak}               % simbolos de ajedrez
+\usepackage[T1]{fontenc}        % Texto de alta calidad en pdfs
+\usepackage{ae,aecompl}         % Texto de alta calidad en pdfs
+\usepackage{pslatex}            % Texto de alta calidad en pdfs
+\usepackage{textcomp}           % Cosas de Texto
+\usepackage{multicol}           % Para manejar multiples columnas
+\usepackage[ansinew]{inputenc}  % Para poner acentos
+\usepackage[spanish]{babel}     % Para separar palabras al fin de los renglones.
+\usepackage{amsmath}            % Para hacer matemÃ¡tica
+\usepackage{amsfonts}           % Para hacer matemÃ¡tica
+\usepackage{amssymb}            % Para hacer matemÃ¡tica
+\usepackage{enumerate}          % Para Manehar Enumeraciones
+\usepackage{vwcol}							% para manejar multiples columas
+\usepackage{graphicx}						% Para manejar los grÃ¡ficos
+\usepackage{fancyhdr}						% Para manejar encabezados y pie de pÃ¡ginas
+\usepackage{lastpage}						% Crea una referencia a la Ãºltima pÃ¡gina. Util para numerar pÃ¡ginas de la forma "pÃ¡gina x de y"
+\usepackage{listings}
+%\usepackage[final]{ps4pdf} 	  % para incluir archivos eps dentro del documento pdf
+\usepackage{array}
+\usepackage{soul}
+\usepackage{boolexpr}
+
+% ConfiguraciÃ³n de pÃ¡gina
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\textwidth 14cm									% Declaraciones para cambiar el tamaÃ±o del Ã¡rea de texto para usar
+\textheight 22.7cm							% Declaraciones para cambiar el tamaÃ±o del Ã¡rea de texto para usar
+\oddsidemargin 1cm			  			% Declaraciones para cambiar el tamaÃ±o del Ã¡rea de texto para usar
+\evensidemargin 1cm		  			% Declaraciones para cambiar el tamaÃ±o del Ã¡rea de texto para usar
+\topmargin -0.5cm								% Declaraciones para cambiar el tamaÃ±o del Ã¡rea de texto para usar
+\headheight 0cm									% Declaraciones para cambiar el tamaÃ±o del Ã¡rea de texto para usar
+\headsep 10pt										% Declaraciones para cambiar el tamaÃ±o del Ã¡rea de texto para usar
+\marginparwidth 0cm
+
+% BibliografÃ­a
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibliographystyle{alpha}       % estilo de la bibliografia
+	
+% Titulo
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\s}{\the\textwidth}	
+\newcommand{\materiaName}{Curso OOP y Java}				                                                % Guardo el nombre de la asignatura.
+\newcommand{\seminarioName}{Guía de ejercicios}    % Guardo el nombre de la guÃ­a de ejercicios.
+\newcommand{\fecha}{9 y 10 de Diciembre de 2014}                                          % Guardo la fecha.
+\newcommand{\titulo}{																										       	% Para hacer el TÃ­tulo como me gusta
+	\begin{center}																												        % Para hacer el TÃ­tulo como me gusta
+	\vspace*{-22pt}\large\textbf{\materiaName}\\										              % Para hacer el TÃ­tulo como me gusta				
+	\vspace{2pt}\normalsize{\seminarioName}\\																% Para hacer el TÃ­tulo como me gusta
+	\vspace{2pt}\small{\textbf{F}undación \textbf{I}nstituto \textbf{L}eloir}\\																									% Para hacer el TÃ­tulo como me gusta
+	\vspace{-6pt}\rule{\textwidth}{0.4pt}
+	\end{center}																													  % Para hacer el TÃ­tulo como me gusta
+}
+
+% Encabezado y Pie de PÃ¡gina
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\headheight=14pt																													% Creo el encabezado y pie pÃ¡gina que quiero.
+\renewcommand{\headrulewidth}{0.4pt}																			% Creo el encabezado y pie pÃ¡gina que quiero.
+\renewcommand{\footrulewidth}{0.4pt}																			% Creo el encabezado y pie pÃ¡gina que quiero.
+\pagestyle{fancy}%																												% Creo el encabezado y pie pÃ¡gina que quiero.
+\fancyfoot{}																															% Creo el encabezado y pie pÃ¡gina que quiero.
+\lfoot{\footnotesize{Página \thepage\ de \pageref{LastPage}}}							% Creo el encabezado y pie pÃ¡gina que quiero.
+\lhead{\footnotesize{\materiaName}}																				% Creo el encabezado y pie pÃ¡gina que quiero.
+\rhead{\footnotesize{\fecha\  - \seminarioName}}													% Creo el encabezado y pie pÃ¡gina que quiero.
+
+% Fuentes
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\renewcommand{\familydefault}{\sfdefault}                                 % Cambia todas las fuentes a sans Serif
+
+% Enumeraciones
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\theenumi}{\alph{enumi}}
+\renewcommand{\labelenumi}{\textbf{\theenumi}}
+\renewcommand{\theenumii}{\arabic{enumii}}
+\renewcommand{\labelenumii}{\theenumii}
 
 \begin{document}
+  \titulo
+\section{Ejercicio 1 - Clases para representar DNA y RNA}
+En este ejercicio se van a crear Clases que nos permitan trabajar con secuencias 
+de DNA y RNA. Para ello, haremos un primer diseño e implementación de nuestro 
+modelo y luego haremos modificaciones sobre él para incluir abstracciones y 
+mecanismos de reutilización de código.
+
+En todo momento, nos interesará contar con dos clases, que llamaremos RNA y DNA.
+Ambas deberán permitir recuperar un String con la secuencia en si, recuperar la 
+longitud de la secuencia y obtener una secuencia reversa complementaria como un
+objeto DNA o RNA. Además, la clase DNA debe responder transcribirse y así 
+obtener una objeto de la clase RNA con la secuencia correspondiente.
+\subsection{Parte uno}
+El primer diseño consistirá de solamente las clases DNA y RNA: 
+\begin{itemize}
+  \item Ambas tendrán una variable de tipo String para representar el estado 
+  interno, que contendrá la secuencia en sí misma. Para simplificar,  asumiremos 
+  que las secuencias no contienen degeneraciones ni carácteres extraños. Si se 
+  permitirán \textit{gaps}.   
+  \item Ambas tendrán estos métodos: 
+  \begin{description}
+    \item[Constructor] Crea una instancia de DNA o RNA y la inicializa con una
+    secuencia (pasado como parámetro en un \textit{String}). 
+    \item[getSequence()] Devuelve un String con la secuencia. 
+    \item[length()] Devuelve int int con la longitud de la secuencia.
+    \item[getCompSeq()] Devuelve un objeto que representa la secuencia 
+    reversa-complementaria. La clase del objeto que se devuelve es la misma que 
+    la clase del objeto que llama al método (DNA para DNA, RNA para RNA). 
+    Hay muchas formas de implementar este método, para este ejercicio 
+    recomiendo:
+    \begin{enumerate}
+      \item Crear un \textit{Array} de \textit{char} del mismo tamaño de la 
+      secuencia.
+      \item Recorrer la secuencia original desde el fin hasta el principio, con 
+      un \textit{for(;;)\{\ldots\}}.
+      \item En cada iteración del recorrido tomar el caracter de la posición 
+      actual y elegir con un \textit{switch} el caracter que representa a la
+      base complementaria.
+      \item Agregar el caracter complementario al \textit{Array} creado en el 
+      inicio, yendo desde el comienzo hasta el fin. 
+  \end{enumerate}
+      Debajo se muestra el código base para este método.
+  \end{description}
+  \item La clase DNA tendrá el método:
+  \begin{description}
+  \item[transcribe()] Que devuelve un objeto de la clase RNA con la secuencia
+  que le corresponde (puede implementarse muy fácilmente usando el método 
+  \textit{replace(char buscado, char reemplazo)} de la clase \textit{String}.
+\end{description} 
+\end{itemize}
+
+\subsection{Parte dos}
+Este diseño puede mejorarse. El código de los métodos \textit{getSequence() y 
+length()} son idénticos en ambos casos. También la forma de representar el 
+estado interno del objeto es la misma. Es decir tenemos código duplicado. Para 
+evitar esto vamos a crear una clase abstracta que sea superclase de RNA y DNA. 
+Esta nueva clase contendrá el estado interno, y los métodos que mencionamos, y 
+las clases RNA y DNA los heredarán. Es conveniente que el nombre de la nueva 
+clase represente un concepto que sea una abstracción de DNA y RNA (ya no como 
+clases en nuestro código, sino desde la bioquímica). Teniendo en cuenta que 
+tanto el DNA, como el RNA \emph{son} ácidos nucleicos, un nombre adecuado para 
+la nueva clase puede ser NucleicAcid.
+
+\subsection{Parte tres}
+El código de los métodos \textit{getCompSeq()} es casí idéntico.
+Lo que se hará a continuación es escribir en la clase NucleicAcid un código que 
+abstraiga las partes comunes del código de estos dos métodos, y que deje la 
+responsabilidad de llevar a cabo partes partes diferentes a cada clase concreta.  
+Para ello, se creará en NucAcid el método \textit{getComplementarySequence()}, 
+que devolverá un \textit{String}. Se copiará el contenido del método  
+\textit{getCompSeq()} de RNA o DNA. Este método devolveré un \textit{String} que
+contendrá la secuencia complementaria. Este será el único método que compute la
+creación de una secuencia comeplementaria. Ahora, el comportamiento de los 
+métodos \textit{getCompSeq()} en RNA y DNA se verá muy reducido, solamente 
+deberán:
+\begin{enumerate}
+  \item Llamar al método \textit{getComplementarySequence()} para obtener el 
+  \textit{String} con la secuencia complementaria.
+  \item Crear un nuevo objeto de retorno del tipo que corresponda (DNA o RNA) y 
+  que contenga la secuencia complementaria.
+  \item Devolver el resultado. 
+\end{enumerate}
+
+Se deben realizar modificaciones en el código que se tiene en este momento en
+el método \textit{getComplementarySequence()}. Los cambios que hay son tres:
+\begin{enumerate}
+  \item El tipo del objeto que se devuelve.
+  \item El código que elige la base complementaria de Uracilo (en RNA) y 
+  Timina (en DNA).
+  \item El código que elige la base complementaria de Adenina (en ambas clases).
+\end{enumerate}
+Las modificaciones necesarias para resolver los dos primeros puntos es trivial.
+Para el tercer punto, se delegará la responsabilidad de saber que base le 
+corresponde a la Adenina en las clases DNA y RNA. Para ello:
+\begin{enumerate}
+  \item Se creará el método abstracto \textit{getCompCharForAdenine()} en la 
+  clase NucleicAcid.
+  \item Al ser un método abstracto, se requiere que todas las subclases 
+  concretas de NucleicAcid lo implementen. Entonces, se creará también este 
+  método en DNA y RNA. En DNA deberá devolver 'T' y en RNA deberá devolver 'R'.
+  \item Se modificará el código de \textit{getComplementarySequence()} para que
+  utilice estos métodos. 
+\end{enumerate}
+
+\subsection{Parte cuatro}
+En la última parte de este ejercicio se modificará el alcance de visión de los 
+métodos de las tres clases. Los constructores y los métodos \textit{getCompSeq()},
+\textit{getSequence()}, \textit{length()} y \textit{transcribe()} deben ser 
+públicos (\textit{public}) y los demás métodos protejidos (\textit{protected}).
+
+\subsection{Código para el método \textit{getCompSeq}}       
+\lstset{language=Java,basicstyle=\small}
+\begin{lstlisting}
+  DNA getCompSeq() {
+    int length = this.length();
+      char[] newSeq = new char[length];
+      for (int i=length; i>0;i--) {
+        char currentChar = this.getSequence().charAt(i-1);
+        switch (currentChar) {
+          case 'a': case 'A': newSeq[length-i] = 'T'; break;
+          case 'c': case 'C': newSeq[length-i] = 'G'; break;
+          case 't': case 'T': newSeq[length-i] = 'A'; break;
+          case 'g': case 'G': newSeq[length-i] = 'C'; break;
+          case '-': newSeq[length-i] = '-'; break;
+          default: newSeq[length-i] = 'N'; break;
+        }
+      }
+      return new DNA(String.valueOf(newSeq));
+   }
+\end{lstlisting}
+
+\subsection{Conceptos relacionados con el ejercicio}
+\begin{itemize}
+  \item Herencia.
+  \item Clases abstractas y concretas.
+  \item Métodos abstractos.
+  \item Patrón de diseño: template method.
+  \item Manejo de \textit{Strings}.
+\end{itemize}
+
+\section{Ejercicio 2 - Estructuras de datos}
 
 
-\section{Title}
+\section{Ejercicio 3 - Juego de Hanoi}
+\section{Ejercicio 4 - Representación de terrenos con precisión variable}
+\section{Ejercicio 5 - Mapa de rangos}
 
-\subsection{Subtitle}
-
-Plain text.
-
-\subsection{Another subtitle}
-
-More plain text.
-
+\section{}
 
 \end{document}
