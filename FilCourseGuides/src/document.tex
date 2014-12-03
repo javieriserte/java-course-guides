@@ -245,7 +245,98 @@ públicos (\textit{public}) y los demás métodos protejidos (\textit{protected}).
 \end{itemize}
 
 \section{Ejercicio 2 - Estructuras de datos}
+En este ejercicio se va a trabajar con algunas de las estructuras de datos más comunes
+presentes en la libreria de Java:
+\begin{description}
+	\item[Listas(List)]   Colección de datos ordenados y posiblemente repetidos.
+	\item[Mapas(Map)]     Asociaciones del tipo Clave $\leftarrow$ Valor.
+	\item[Conjuntos(Set)] Colección de datos sin orden y sin repeticiones. Es un representación
+	                      del la noción matemática de conjunto.
+\end{enumerate}
+Entre paréntesis se muestra la interfaz que le corresponde a cada una de ellas.
+Para llevar adelante este ejercicio se necesitará usar variables de tipo genéricos (o \textit{Generics}).
+\subsection{Parte 1}
+Es esta primer parte se crearán tres clases ejecutables. En una de ellas se trabajará con listas, en otra con mapas y en la última con conjuntos.
 
+Las clases ejecutables en Java se diferencian del resto de las clases en que poseen un método de clase 
+especial llamado \textit{main}. Dentro de este método escribiremos el código que querramos que se ejecute.
+La declaración del método \textit{main} es:
+\begin{lstlisting}
+  public static void main(String[] args) {
+  // hacer cosas.....
+  // por ejemplo:
+  // System.out.println("Este es una clase ejecutable");
+  }
+\end{lstlisting}
+El método es \textit{public} indicando que puede llamarse fuera de la clase. Es \textit{static} indicando que
+es un método de clase (y no de instancia). El tipo de retorno es \textit{void}, esto significa que el método no devuelve ningún valor. El método recibe como parámetro un \textit{Array} de \textit{String}. Estos son los parámetros con los se llama al programa. Por ejemplo, si se ejecuta en un terminal de línea de comandos:
+\begin{verbatim}
+>java -jar MiClaseEjecutable.jar con estos parámetros.
+\end{verbatim}
+Las palabras 'con', 'estos' y 'parámetros' serán en contenido del \textit{Array} \textit{args}.
+
+La primera clase que se creará se llamará ListExample. Como se ha dicho antes, en Java las listas debe 
+utilizar la interfaz \textit{List}. La interfaz \textit{List} nos dice con que mensajes las listas se van a
+comunicar con el resto de las clases, pero carece de implementación y de estado interno. Entonces, deberemos
+trabajar con alguna clase concreta que implemente la interfaz \textit{List}. Dentro de las colecciones que
+ofrece Java, hay varias que lo hacen. Las más frecuentemente usadas son:
+\begin{enumerate}
+	\item ArrayList
+	\item Vector
+	\item LinkedList
+\end{enumerate}
+Cada una de ellas está implementada de forma diferente, las dos primeras usan Arrays para guardar los datos, pero la primera no es segura en un contexto concurrente y la segunda si lo es (a expensas de tiempo de cómputo). La tercera usa listas enlazadas en lugar de Arrays. Es decir, cada una de ellas almacena y manipula los datos de forma diferente. Sin embargo, como todas implementan la misma interfaz, es posible trabajar con ellas de la misma forma y pueden ser intercambiables si es necesario.
+
+Los métodos más usados de la interfaz List son:
+\begin{description}
+	\item[add] Agregar un nuevo elemento.
+	\item[addAll] Agrega todos los elementos de otra colección a la lista.
+	\item[set] Reemplaza un elemento por otro.
+  \item[get] Recupera un elemento por el índice (número de orden en la lista).
+  \item[contains] Busca si un valor se encuentra en la lista.
+  \item[remove] Elimina un elemento por el índice.
+  \item[size] Devuelve la cantidad de elementos en la lista.
+  \item[clear] Elimina todos los elementos de lista.
+\end{description}
+
+Las listas, como todas las colecciones, son objetos que almacenan otros objetos.
+Una lista que almacena números enteros y una lista que almacena palabras no son intercambiables.
+Por ello, el tipo ambas es diferente. Para describir estas dos listas se utiliza el operador \textit{<>} (\textit{diamod}).
+\begin{lstlisting}
+  // Lista de números enteros:
+  List<Integer> listaDeEnteros = new ArrayList<>();
+  // Lista de palabas:
+  List<String> listaDeEnteros = new ArrayList<>();
+\end{lstlisting}
+
+Se agregarán a cada una de las tres listas 5000 de números generados al azar entre 1 y un millón. 
+Luego, se compararán las listas de a pares y se contará la cantidad de elementos compartidos.
+
+Se crearán los siguientes métodos de clase:
+\begin{description}
+	\item[fillListWithRandonNumbers] Este método debe recibir tres parámetros: una lista vacia, la cantidad de elementos a agregar a la lista y el valor máximo posible (el rango de valores será entre 1 y este valor). El método debe devolver la lista dada inicialmente con los valores agregados. (usar \textit{Math.Random()} para generar los números al azar.) 
+	\item[compareTwoLists] Este método recibe dos listas de números y devuelve la cantidad de elementos en común que tienen (usar el método \textit{contains}). 
+	\item[compareAllLists] Este método recibe una lista de listas de números y compara todos los pares posibles usando el método \textit{compareTwoLists}. El método no devuelve ningún valor, sino que imprime por pantalla los recuentos.
+\end{description}
+
+La segunda clase que se creará será MapExample. Los mapas son estructuras de datos asociativas del tipo 
+Clave $\leftarrow$ Valor, como un diccionario. Map es, al igual que List, una interfaz. Las clases más usadas que implementan Map son:
+\begin{description}
+	\item[HashMap] Organiza los datos en una tabla de \textit{hashing}.
+	\item[TreeMap] Organiza los datos en un árbol autobalanceante.
+\end{description}
+
+La clave y el valor no tienen porque se del mismo tipo. 
+Se pueden tener un mapa de enteros a enteros o de enteros a String, o cualquier otro objeto.
+La declaración de tipo de los mapas también requiere usar el operador \textit{diamond}, pero ahora requerirá dos tipos diferentes:
+\begin{lstlisting}
+  // Mapa de enteros a enteros:
+  Map<Integer,Integer> mapaDeEnterosAEnteros = new HashMap<>();
+  // Mapa de enteros a palabras:
+  Map<Integer,String> mapaDeEnterosAEnteros = new HashMap<>();
+\end{lstlisting}
+
+En este ejemplo, se crearán mapas de enteros a enteros.
 
 \section{Ejercicio 3 - Juego de Hanoi}
 \section{Ejercicio 4 - Representación de terrenos con precisión variable}
