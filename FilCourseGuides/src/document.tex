@@ -249,14 +249,13 @@ En este ejercicio se va a trabajar con algunas de las estructuras de datos más c
 presentes en la libreria de Java:
 \begin{description}
 	\item[Listas(List)]   Colección de datos ordenados y posiblemente repetidos.
-	\item[Mapas(Map)]     Asociaciones del tipo Clave $\leftarrow$ Valor.
+	\item[Mapas(Map)]     Asociaciones del tipo Clave $\rightarrow$ Valor.
 	\item[Conjuntos(Set)] Colección de datos sin orden y sin repeticiones. Es un representación
 	                      del la noción matemática de conjunto.
-\end{enumerate}
+\end{description}
 Entre paréntesis se muestra la interfaz que le corresponde a cada una de ellas.
 Para llevar adelante este ejercicio se necesitará usar variables de tipo genéricos (o \textit{Generics}).
-\subsection{Parte 1}
-Es esta primer parte se crearán tres clases ejecutables. En una de ellas se trabajará con listas, en otra con mapas y en la última con conjuntos.
+Es esta ejercicio se crearán tres clases ejecutables. En una de ellas se trabajará con listas, en otra con mapas y en la última con conjuntos.
 
 Las clases ejecutables en Java se diferencian del resto de las clases en que poseen un método de clase 
 especial llamado \textit{main}. Dentro de este método escribiremos el código que querramos que se ejecute.
@@ -275,6 +274,7 @@ es un método de clase (y no de instancia). El tipo de retorno es \textit{void}, 
 \end{verbatim}
 Las palabras 'con', 'estos' y 'parámetros' serán en contenido del \textit{Array} \textit{args}.
 
+\subsection{Parte 1}
 La primera clase que se creará se llamará ListExample. Como se ha dicho antes, en Java las listas debe 
 utilizar la interfaz \textit{List}. La interfaz \textit{List} nos dice con que mensajes las listas se van a
 comunicar con el resto de las clases, pero carece de implementación y de estado interno. Entonces, deberemos
@@ -319,8 +319,65 @@ Se crearán los siguientes métodos de clase:
 	\item[compareAllLists] Este método recibe una lista de listas de números y compara todos los pares posibles usando el método \textit{compareTwoLists}. El método no devuelve ningún valor, sino que imprime por pantalla los recuentos.
 \end{description}
 
-La segunda clase que se creará será MapExample. Los mapas son estructuras de datos asociativas del tipo 
-Clave $\leftarrow$ Valor, como un diccionario. Map es, al igual que List, una interfaz. Las clases más usadas que implementan Map son:
+\subsection{Parte 2}
+La segunda clase que se creará será SetExample. Los conjuntos (Sets) son 
+agrupaciones de elementos del mismo tipo, sin orden y sin repetición.  
+\textit{Set} es la interfaz, para usar uno, se debe elegir una clase concreta
+que implementa la interfaz \textit{Set}. Las más comunes son:
+\begin{description}
+  \item[HashSet] Almacena los datos en una tabla de \textit{Hashing}.
+  \item[TreeSet] Almacena los datos en una estructura de árbol.
+\end{description}
+Para declarar el tipo de un \textit{Set} es necesario usar el operador 
+\textit{diamond}.
+ \begin{lstlisting}
+  // Lista de números enteros:
+  Set<Integer> conjuntoDeEnteros = new TreeSet<>();
+  // Lista de palabas:
+  Set<String> conjuntoDePalabras = new HashSet<>();
+\end{lstlisting}
+
+\begin{description}
+  \item[add] Agrega un nuevo elemento.
+  \item[clear] Elimina todos los elementos.
+  \item[contains] Busca en el conjunto si existe un elemento dada.
+  \item[isEmpty] Pregunta si el conjunto está vacio.
+\end{description}
+Debido a que los conjuntos no tienen orden, no tiene sentido recorrer los
+elementos por su índice o recuperar un elemento por su índice (¿Cuál es el 
+primer elemento de un conjunto?).
+
+En este ejemplo, se crearán dos \textit{Set}, uno de ellos será un 
+\textit{HashSet} y el otro será un \textit{TreeSet}. Cada uno de ellos se 
+llenará con un millón de números enteros al azar entre 1 y un millón. Se 
+medirá el tiempo que se tarda en agregar todos los números a ambos conjuntos
+(para esto usar el método System.nanoTime()). Luego se comparará la cantidad de 
+elementos en común en ambos conjuntos. Esto se hará dos veces, en la primera se
+recorren los elementos del \text{HashSet} y se pregunta al \textit{TreeSet} si 
+contiene a ese elemento y en la segunda se recorren los elementos del 
+\textit{TreeSet} y se pregunta al \text{HashSet} si contiene a ese elemento.
+
+Para ello, se creará una clase ejecutable y los siguiente métodos de clase:
+\begin{description}
+  \item[fillSetWithRandomNumbers] Este método recibe tres parámetros: un 
+  conjunto vacio, la cantidad de elementos a agregar al conjunto y el valor 
+  máximo posible (el rango de valores será entre 1 y este valor). El método debe
+  devolver el conjunto dado inicialmente con los valores agregados. Este método
+  además debe medir el tiempo antes de agregar un elemento y al finalizar. 
+  Una vez hecho esto, se calcula la diferencia de tiempos y se muestra.
+  \item[compareTwoSets] Este método recibe dos parámetros: cada uno de ellos es
+  un \textit{Set} de números enteros. El método debe devolver la cantidad de
+  elementos en común entre los dos conjuntos. Se recorren todos los elementos
+  del primer conjunto y en cada paso se pregunta al segundo conjunto si contiene
+  a ese número. Este método también debe medir el tiempo antes de comenzar a 
+  comparar y al finalizar. Luego, se muestra la diferencia de tiempo.   
+\end{description}
+
+\subsection{Parte 3}
+La tercer clase que se creará será MapExample. Los mapas son estructuras de 
+datos asociativas del tipo Clave $\rightarrow$ Valor, como un diccionario. 
+Map es, al igual que List, una interfaz. Las clases más usadas que implementan 
+Map son:
 \begin{description}
 	\item[HashMap] Organiza los datos en una tabla de \textit{hashing}.
 	\item[TreeMap] Organiza los datos en un árbol autobalanceante.
@@ -336,7 +393,46 @@ La declaración de tipo de los mapas también requiere usar el operador \textit{di
   Map<Integer,String> mapaDeEnterosAEnteros = new HashMap<>();
 \end{lstlisting}
 
-En este ejemplo, se crearán mapas de enteros a enteros.
+Lós metodos más comunes de la interfaz \textit{Map} son:
+\begin{description}
+  \item[put] Agrega un nuevo par clave $\rightarrow$ valor o reemplaza uno 
+  existente.
+  \item[get] Recupera un valor a parte de la clave.
+  \item[clear] Elimina todos los pares.
+  \item[keySet] Devuelve un conjunto con todas claves.
+  \item[containsKey] Busca en el mapa si existe una clave dada.
+  \item[isEmpty] Pregunta si el mapa está vacio.
+\end{description}
+
+En este ejemplo, se crearán 1000000 números enteros al azar entre uno y 1000000, 
+y se usará un \textit{Map} para almacenar la cantidad de veces que aparece cada 
+uno. Se mostrará el número más frecuente. Esto se repetirá unas 100 veces. El
+valor de la clave más frecuente en cada repetición se almacenará en otro mapa 
+(también de enteros a enteros). De forma tal que saber que cantidad de veces 
+cierto recuento fue el máximo. Finalmente, se mostrarán todos los pares 
+clave $\rightarrow$ valor de este segundo mapa. Para ello, se crearán los 
+métodos de clase:
+
+\begin{description}
+  \item[updateKeyCount] Este método recibe dos parámetros: un mapa de enteros a 
+  enteros y un número entero. Se debe preguntar al mapa si el número entero dado 
+  existe. Si no existe, se agrega un núevo par con el número generado como clave
+  y el número uno como valor; si existe, se incrementa en uno el valor asociado 
+  a ese número. Finalmente, se devuelve el mapa actualizado.
+  \item[fillMapWithRandomNumbers] Este método recibe tres parámetros: un mapa de 
+  enteros a enteros vacio, el número de elementos que hay que agregar al mapa y 
+  el valor máximo para cualquier número. El método debe devolver el mapa lleno, 
+  con los números generados como clave y el recuento como valor. Cuando se 
+  genera un nuevo número al azar, 
+  \item[getMostFrequentKey] Este método recibe un solo parámetro: un mapa de
+  enteros a enteros y devuelve la clave más frecuente. A mapa recibido se le 
+  pide el conjunto de claves y se lo recorre preguntando en cada paso si la 
+  clave actual es la más frecuente de las claves vistas.
+
+\end{description}
+
+Al igual que antes, se creará una clase ejecutable para hacer funcionar el 
+ejemplo. 
 
 \section{Ejercicio 3 - Juego de Hanoi}
 \section{Ejercicio 4 - Representación de terrenos con precisión variable}
