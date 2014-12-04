@@ -435,6 +435,121 @@ Al igual que antes, se creará una clase ejecutable para hacer funcionar el
 ejemplo. 
 
 \section{Ejercicio 3 - Juego de Hanoi}
+En este ejercicio se crearán clases que permitirán jugar al juego de las torres
+de Hanoi. En este juego hay discos de diferentes diámetros y un tablero con tres
+varillas (que cumplen el rol de torres). El juego se inicia con todos los 
+discos colocados en una de las varillas uno encima del otro tal que el diámetro
+de un discos debe ser menor al diametro del disco que se encuentra 
+inmediatamente debajo, si es que hay uno. El objetivo consiste en mover todos 
+los discos de una torre a otra, de tal forma que siempre se cumplan es reglas:
+\begin{itemize}
+  \item Se puede mover un solo disco a la vez.
+  \item Los movimientos consisten en tomar un disco que se encuentra en la cima 
+  de una de las torre y colocarlo en la cima de una de las otras dos torres. 
+  \item No se puede colocar un disco sobre otro de menor tamaño.
+\end{itemize}
+
+El modelo consistirá de las clases:
+\begin{description}
+  \item[Ring] Esta clase modelará a cada uno de los discos. Su estado interno
+  consistirá de una sola variable que representará el radio del disco.
+  \item[BoardGame] Esta clase modelará el tablero de juego.
+  \item[HanoiClient] Esta será la clase ejecutable que nos permitirá 
+  interactuar con el juego.
+\end{description}
+Entre un el \textit{HanoiClient} y el \textit{BoardGame} se establecerá una 
+comunicación. El \textit{HanoiClient} solo podrá ordenarle a \textit{BoardGame} 
+que intente realizar un movimiento. Esto lo hará a través de la interfaz pública
+de \textit{BoardGame} y este le responderá según si el movimiento es válido,
+es inválido, o si es válido y además ganó el juego.
+Las respuestas del \textit{BoardGame} se modelarán con la enumeración 
+\textit{BoardResponse} que contendrá tres valores: 'ILLEGAL_MOVE', 'VALID_MOVE',
+'YOU_WIN'. 
+El tablero de juego tiene tres varillas, para modelar la posición que 
+corresponde a cada varilla se creará la enumeración \textit{BoardStacks}. Esta 
+tendrá tres valores: 'LEFT', 'MIDDLE', 'RIGHT'.
+
+El estado interno de un \textit{BoardResponse} contendrá cinco variables.
+Una de ellas representará la cantidad de discos total en el juego.
+Tres se ellas representarán las varillas en la que se cololan los discos.
+Una para la izquierda, otra para la del medio y otra para la derecha.
+La una de las varilla se reprenterá con una lista de discos 
+(\textit{List<Ring>}). El contenido de estas listas cambiará luego de cada 
+movimiento. Finalmente, la última variable del estado interno representará 
+la posición de la varilla en la que deben colocarse todos los discos para ganar
+el juego.
+
+\textit{BoardResponse} contendrá los siguientes métodos públicos de instancia:
+\begin{description}
+  \item[move] Es el método que permite realizar los movimientos. Recibe dos
+  parámetros de tipo \textit{BoardStacks}, la posición desde la cual se toma el 
+  disco y la posición en la que se debe sejar el disco. Devuelve un valor de la 
+  enumeración \textit{BoardResponse}. Este método debera hacer lo siguiente:
+  \begin{enumerate}
+    \item Intentar tomar un disco de la varilla de posición inicial, si no es 
+    posible (porque la varilla esta vacia) se deberá devolver una respuesta de
+    movimiento ilegal y terminar.
+    \item Intentar colocar el disco tomado en la la varilla de la posición 
+    final. Si no es posible se deberá devolver una respuesta de
+    movimiento ilegal y terminar.
+    \item Verificar si se ganó el juego, y devolver una respuesa de juego ganado
+    si es así y terminar.
+    \item Devolver una respuesta de movimiento válido. 
+  \end{enumerate}
+  \item[toString] Todos los objetos poseen este método, ya que lo heredan de
+  \textit{Object}. Se reescribirá para dar una representación en texto del 
+  estado de tablero, mostrando cuantos discos hay en cada torre.
+\end{description}
+También tendrá dos métodos constructores. Uno de ellos sin ninún parámetro, el 
+otro debe recibir cinco parámetros, cada uno de ellos se corresponde con una de 
+las variables del estado interno del objeto. Los dos constructores serán 
+privados, por lo que no pueden ser usados fuera de esta clase. Hacer esto,
+aparentemente, impide que se puedan crear objetos de este tipo. Sin embargo, es
+posible si se utiliza un método de clase para construir los objetos. 
+Por ello, \textit{BoardResponse} contendrá un método de clase que además de 
+permitir la creación de los objetos, permitirá validar que la creación sea
+correcta:
+ \begin{description}
+  \item[createBoardGame] Recibirá dos parámetros de tipo \textit{BoardStacks}, 
+  indicando la posición inicial de todos los discos y la posición final a la que
+  debe llegarse y un parámetro que es un número entero indicando la cantidad de 
+  discos en el tablero. Debe devolver un objeto \textit{BoardGame} correctamente
+  creado. Este método debe:
+  \begin{itemize}
+    \item Verificar ue las posiciones de inicio y fin sean diferentes.
+    \item Verificar que la cantidad de discos sea mayor a cero.
+    \item Crear una lista de discos y agregarle los discos, respetando las 
+    reglas del juego.
+    \item Crear dos listas de discos vacias.
+    \item Crear un objeto \textit{BoardGame} correctamente armado.
+  \end{itemize}
+\end{description}
+
+La clase \texit{HanoiClient} Será ejecutable y actuará de mediador entre el 
+usuario humano y el juego. Es una clase que está separada del resto de las 
+clases del modelo del juego. Esto no es casual, es una decisión de diseño que 
+permitiría alterar la interfaz que interactúa con el humano sin tener que 
+modificar nada del comportamiento del juego. Es este caso, se usará una interfaz
+de línea de texto para jugar, pero si se quisiera, se podría construir otra 
+interfaz, por ejemplo gráfica y esto se podría hacer sin tener que modificar las
+clases \textit{BoardGame},y \textit{Ring}, ni las enumeraciones.
+
+Las personas interacturán con esta clase mediante comandos de texto. Los
+comandos de texto que se aceptarán son tres: 
+\begin{itemize}
+  \item MOVE \textit{X} TO \textit{X}. Donde X y Y se reemplazan por \textit{L},
+  \textit{M} y \textit{R}, para denotar izquierda, centro y derecha. Por ejemplo
+  un comando válido sería:
+  \begin{verbatim}
+  MOVE R TO L
+  \end{verbatim}
+  \item END. Para finalizar el juego.
+  \item RESTART. Para comenzar un juego nuevo.
+\end{itemize}
+
+  
+
+
 \section{Ejercicio 4 - Representación de terrenos con precisión variable}
 \section{Ejercicio 5 - Mapa de rangos}
 
