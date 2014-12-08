@@ -50,6 +50,7 @@
 \usepackage{array}
 \usepackage{soul}
 \usepackage{boolexpr}
+\usepackage[pdfborder={0 0 0}]{hyperref}
 
 % ConfiguraciÃ³n de pÃ¡gina
 %%%%%%%%%%%%%%%%%%%%%%%%%
@@ -80,7 +81,10 @@
 	\vspace{-6pt}\rule{\textwidth}{0.4pt}
 	\end{center}																													  % Para hacer el TÃ­tulo como me gusta
 }
-
+\newcommand{\lbr}{[}
+\newcommand{\rbr}{]}
+\newcommand{\lpar}{(}
+\newcommand{\rpar}{)}
 % Encabezado y Pie de PÃ¡gina
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \headheight=14pt																													% Creo el encabezado y pie pÃ¡gina que quiero.
@@ -88,7 +92,7 @@
 \renewcommand{\footrulewidth}{0.4pt}																		% Creo el encabezado y pie pÃ¡gina que quiero.
 \pagestyle{fancy}%																										% Creo el encabezado y pie pÃ¡gina que quiero.
 \fancyfoot{}																															% Creo el encabezado y pie pÃ¡gina que quiero.
-\lfoot{\footnotesize{Página \thepage\ de \pageref{LastPage}}}						% Creo el encabezado y pie pÃ¡gina que quiero.
+\lfoot{\footnotesize{Página \thepage}}						% Creo el encabezado y pie pÃ¡gina que quiero.
 \lhead{\footnotesize{\materiaName}}																				% Creo el encabezado y pie pÃ¡gina que quiero.
 \rhead{\footnotesize{\fecha\  - \seminarioName}}												% Creo el encabezado y pie pÃ¡gina que quiero.
 
@@ -150,8 +154,9 @@ El primer diseño consistirá de solamente las clases DNA y RNA:
   \item La clase DNA tendrá el método:
   \begin{description}
   \item[transcribe()] Que devuelve un objeto de la clase RNA con la secuencia
-  que le corresponde (puede implementarse muy fácilmente usando el método 
-  \textit{replace(char buscado, char reemplazo)} de la clase \textit{String}.
+  que se obtiene de transcribir el DNA a RNA (puede implementarse muy fácilmente
+  usando el método \textit{replace(char buscado, char reemplazo)} de la clase 
+  \textit{String}.
 \end{description} 
 \end{itemize}
 
@@ -160,19 +165,19 @@ Este diseño puede mejorarse. El código de los métodos \textit{getSequence() y
 length()} son idénticos en ambos casos. También la forma de representar el 
 estado interno del objeto es la misma. Es decir tenemos código duplicado. Para 
 evitar esto vamos a crear una clase abstracta que sea superclase de RNA y DNA. 
-Esta nueva clase contendrá el estado interno, y los métodos que mencionamos, y 
-las clases RNA y DNA los heredarán. Es conveniente que el nombre de la nueva 
+Esta nueva clase contendrá el estado interno, y los métodos que mencionamos. 
+Las clases RNA y DNA los heredarán. Es conveniente que el nombre de la nueva 
 clase represente un concepto que sea una abstracción de DNA y RNA (ya no como 
 clases en nuestro código, sino desde la bioquímica). Teniendo en cuenta que 
 tanto el DNA, como el RNA \emph{son} ácidos nucleicos, un nombre adecuado para 
 la nueva clase puede ser NucleicAcid.
 
 \subsection{Parte tres}
-El código de los métodos \textit{getCompSeq()} es casí idéntico.
+El código de los métodos \textit{getCompSeq()} en las dos clases es casí idéntico.
 Lo que se hará a continuación es escribir en la clase NucleicAcid un código que 
 abstraiga las partes comunes del código de estos dos métodos, y que deje la 
 responsabilidad de llevar a cabo partes partes diferentes a cada clase concreta.  
-Para ello, se creará en NucAcid el método \textit{getComplementarySequence()}, 
+Para ello, se creará en NucleicAcid el método \textit{getComplementarySequence()}, 
 que devolverá un \textit{String}. Se copiará el contenido del método  
 \textit{getCompSeq()} de RNA o DNA. Este método devolveré un \textit{String} que
 contendrá la secuencia complementaria. Este será el único método que compute la
@@ -203,7 +208,7 @@ corresponde a la Adenina en las clases DNA y RNA. Para ello:
   clase NucleicAcid.
   \item Al ser un método abstracto, se requiere que todas las subclases 
   concretas de NucleicAcid lo implementen. Entonces, se creará también este 
-  método en DNA y RNA. En DNA deberá devolver 'T' y en RNA deberá devolver 'R'.
+  método en DNA y RNA. En DNA deberá devolver 'T' y en RNA deberá devolver 'U'.
   \item Se modificará el código de \textit{getComplementarySequence()} para que
   utilice estos métodos. 
 \end{enumerate}
@@ -251,47 +256,64 @@ presentes en la libreria de Java:
 	\item[Listas(List)]   Colección de datos ordenados y posiblemente repetidos.
 	\item[Mapas(Map)]     Asociaciones del tipo Clave $\rightarrow$ Valor.
 	\item[Conjuntos(Set)] Colección de datos sin orden y sin repeticiones. Es un representación
-	                      del la noción matemática de conjunto.
+	                      de la noción matemática de conjunto.
 \end{description}
-Entre paréntesis se muestra la interfaz que le corresponde a cada una de ellas.
-Para llevar adelante este ejercicio se necesitará usar variables de tipo genéricos (o \textit{Generics}).
-Es esta ejercicio se crearán tres clases ejecutables. En una de ellas se trabajará con listas, en otra con mapas y en la última con conjuntos.
 
-Las clases ejecutables en Java se diferencian del resto de las clases en que poseen un método de clase 
-especial llamado \textit{main}. Dentro de este método escribiremos el código que querramos que se ejecute.
+Entre paréntesis se muestra la interfaz que le corresponde a cada una de ellas.
+Para llevar adelante este ejercicio se necesitará usar variables de tipo 
+genéricos (o \textit{Generics}). En este ejercicio se crearán tres clases 
+ejecutables. En una de ellas se trabajará con listas, en otra con conjuntos 
+y en la última con mapas.
+
+Las clases ejecutables en Java se diferencian del resto de las clases en que 
+poseen un método de clase especial llamado \textit{main}. Dentro de este método
+escribiremos el código que querramos que se ejecute.
 La declaración del método \textit{main} es:
 \begin{lstlisting}
   public static void main(String[] args) {
   // hacer cosas.....
   // por ejemplo:
-  // System.out.println("Este es una clase ejecutable");
+  // System.out.println("Esta es una clase ejecutable");
   }
 \end{lstlisting}
-El método es \textit{public} indicando que puede llamarse fuera de la clase. Es \textit{static} indicando que
-es un método de clase (y no de instancia). El tipo de retorno es \textit{void}, esto significa que el método no devuelve ningún valor. El método recibe como parámetro un \textit{Array} de \textit{String}. Estos son los parámetros con los se llama al programa. Por ejemplo, si se ejecuta en un terminal de línea de comandos:
+El método es \textit{public} indicando que puede llamarse fuera de la clase. 
+Es \textit{static} indicando que es un método de clase (y no de instancia). 
+El tipo de retorno es \textit{void}, esto significa que el método no devuelve 
+ningún valor. El método recibe como parámetro un \textit{Array} de 
+\textit{String}. Estos son los parámetros con los se llama al programa. Por 
+ejemplo, si se ejecuta en un terminal de línea de comandos:
 \begin{verbatim}
 >java -jar MiClaseEjecutable.jar con estos parámetros.
 \end{verbatim}
-Las palabras 'con', 'estos' y 'parámetros' serán en contenido del \textit{Array} \textit{args}.
+Las palabras 'con', 'estos' y 'parámetros' serán en contenido del 
+\textit{Array} \textit{args}.
 
 \subsection{Parte 1}
-La primera clase que se creará se llamará ListExample. Como se ha dicho antes, en Java las listas debe 
-utilizar la interfaz \textit{List}. La interfaz \textit{List} nos dice con que mensajes las listas se van a
-comunicar con el resto de las clases, pero carece de implementación y de estado interno. Entonces, deberemos
-trabajar con alguna clase concreta que implemente la interfaz \textit{List}. Dentro de las colecciones que
-ofrece Java, hay varias que lo hacen. Las más frecuentemente usadas son:
+La primera clase que se creará se llamará ListExample. Como se ha dicho antes, 
+en Java las listas debe utilizar la interfaz \textit{List}. La interfaz 
+\textit{List} nos dice con que mensajes las listas se van a comunicar con el 
+resto de las clases, pero carece de implementación y de estado interno. 
+Entonces, deberemos trabajar con alguna clase concreta que implemente la 
+interfaz \textit{List}. Dentro de las colecciones que ofrece Java, hay varias 
+que lo hacen. Las más frecuentemente usadas son:
 \begin{enumerate}
 	\item ArrayList
 	\item Vector
 	\item LinkedList
 \end{enumerate}
-Cada una de ellas está implementada de forma diferente, las dos primeras usan Arrays para guardar los datos, pero la primera no es segura en un contexto concurrente y la segunda si lo es (a expensas de tiempo de cómputo). La tercera usa listas enlazadas en lugar de Arrays. Es decir, cada una de ellas almacena y manipula los datos de forma diferente. Sin embargo, como todas implementan la misma interfaz, es posible trabajar con ellas de la misma forma y pueden ser intercambiables si es necesario.
+Cada una de ellas está implementada de forma diferente, las dos primeras usan 
+Arrays para guardar los datos, pero la primera no es segura en un contexto 
+concurrente y la segunda si lo es (a expensas de tiempo de cómputo). La tercera 
+usa listas enlazadas en lugar de Arrays. Es decir, cada una de ellas almacena y 
+manipula los datos de forma diferente. Sin embargo, como todas implementan la 
+misma interfaz, es posible trabajar con ellas de la misma forma y pueden ser 
+intercambiables si es necesario.
 
 Los métodos más usados de la interfaz List son:
 \begin{description}
-	\item[add] Agregar un nuevo elemento.
-	\item[addAll] Agrega todos los elementos de otra colección a la lista.
-	\item[set] Reemplaza un elemento por otro.
+  \item[add] Agregar un nuevo elemento.
+  \item[addAll] Agrega todos los elementos de otra colección a la lista.
+  \item[set] Reemplaza un elemento por otro.
   \item[get] Recupera un elemento por el índice (número de orden en la lista).
   \item[contains] Busca si un valor se encuentra en la lista.
   \item[remove] Elimina un elemento por el índice.
@@ -300,30 +322,44 @@ Los métodos más usados de la interfaz List son:
 \end{description}
 
 Las listas, como todas las colecciones, son objetos que almacenan otros objetos.
-Una lista que almacena números enteros y una lista que almacena palabras no son intercambiables.
-Por ello, el tipo ambas es diferente. Para describir estas dos listas se utiliza el operador \textit{<>} (\textit{diamod}).
+Una lista que almacena números enteros y una lista que almacena palabras no son 
+intercambiables. Por ello, el tipo de  ambas es diferente. Para describir estas
+dos listas se utiliza el operador \textit{<>} (\textit{diamod}).
 \begin{lstlisting}
   // Lista de números enteros:
   List<Integer> listaDeEnteros = new ArrayList<>();
+  List<Integer> listaDeEnteros = new ArrayList<Integer>();
   // Lista de palabas:
-  List<String> listaDeEnteros = new ArrayList<>();
+  List<String> listaDeStrings = new ArrayList<>();
+  List<String> listaDeStrings = new ArrayList<Strings>();
 \end{lstlisting}
 
-Se agregarán a cada una de las tres listas 5000 de números generados al azar entre 1 y un millón. 
-Luego, se compararán las listas de a pares y se contará la cantidad de elementos compartidos.
+Se creará una lista para cada una de las clases concretas de listas que se 
+mencionaron en el cuerpo del método \textit{main}. Se agregarán a cada una de 
+las tres listas 5000 de números generados al azar entre 1 y un millón. Luego, 
+se compararán las listas de a pares y se contará la cantidad de elementos 
+compartidos.
 
 Se crearán los siguientes métodos de clase:
 \begin{description}
-	\item[fillListWithRandonNumbers] Este método debe recibir tres parámetros: una lista vacia, la cantidad de elementos a agregar a la lista y el valor máximo posible (el rango de valores será entre 1 y este valor). El método debe devolver la lista dada inicialmente con los valores agregados. (usar \textit{Math.Random()} para generar los números al azar.) 
-	\item[compareTwoLists] Este método recibe dos listas de números y devuelve la cantidad de elementos en común que tienen (usar el método \textit{contains}). 
-	\item[compareAllLists] Este método recibe una lista de listas de números y compara todos los pares posibles usando el método \textit{compareTwoLists}. El método no devuelve ningún valor, sino que imprime por pantalla los recuentos.
+	\item[fillListWithRandonNumbers] Este método debe recibir tres parámetros:
+	una lista vacia, la cantidad de elementos a agregar a la lista y el valor
+	máximo posible (el rango de valores será entre 1 y este valor). El método
+	debe devolver la lista dada inicialmente con los valores agregados. 
+	(usar \textit{Math.Random()} para generar los números al azar.) 
+	\item[compareTwoLists] Este método recibe dos listas de números y devuelve 
+	la cantidad de elementos en común que tienen (usar el método \textit{contains}). 
+	\item[compareAllLists] Este método recibe una lista de listas de números y 
+	compara todos los pares de listas posibles usando el método 
+	\textit{compareTwoLists}. El método no devuelve ningún valor, sino que 
+	imprime por pantalla los recuentos.
 \end{description}
 
 \subsection{Parte 2}
-La segunda clase que se creará será SetExample. Los conjuntos (Sets) son 
-agrupaciones de elementos del mismo tipo, sin orden y sin repetición.  
-\textit{Set} es la interfaz, para usar uno, se debe elegir una clase concreta
-que implementa la interfaz \textit{Set}. Las más comunes son:
+La segunda clase que se creará será \textit{SetExample}. Los conjuntos (Sets) 
+son agrupaciones de elementos del mismo tipo, sin orden y sin repetición.  
+\textit{Set} es la interfaz, para usar uno se debe elegir una clase concreta
+que implemente la interfaz \textit{Set}. Las más comunes son:
 \begin{description}
   \item[HashSet] Almacena los datos en una tabla de \textit{Hashing}.
   \item[TreeSet] Almacena los datos en una estructura de árbol.
@@ -333,23 +369,25 @@ Para declarar el tipo de un \textit{Set} es necesario usar el operador
  \begin{lstlisting}
   // Lista de números enteros:
   Set<Integer> conjuntoDeEnteros = new TreeSet<>();
+  Set<Integer> conjuntoDeEnteros = new TreeSet<Integer>();
   // Lista de palabas:
   Set<String> conjuntoDePalabras = new HashSet<>();
+  Set<String> conjuntoDePalabras = new HashSet<String>();
 \end{lstlisting}
 
+Los métodos más comunes de \textit{Set} son:
 \begin{description}
   \item[add] Agrega un nuevo elemento.
   \item[clear] Elimina todos los elementos.
-  \item[contains] Busca en el conjunto si existe un elemento dada.
-  \item[isEmpty] Pregunta si el conjunto está vacio.
+  \item[contains] Comprueba si existe un elemento dada en el conjunto.
+  \item[isEmpty] Comprueba si el conjunto está vacio.
 \end{description}
 Debido a que los conjuntos no tienen orden, no tiene sentido recorrer los
-elementos por su índice o recuperar un elemento por su índice (¿Cuál es el 
-primer elemento de un conjunto?).
+elementos por su índice o recuperar un elemento por su índice.
 
 En este ejemplo, se crearán dos \textit{Set}, uno de ellos será un 
 \textit{HashSet} y el otro será un \textit{TreeSet}. Cada uno de ellos se 
-llenará con un millón de números enteros al azar entre 1 y un millón. Se 
+llenará con un millón de números enteros al azar entre uno y un millón. Se 
 medirá el tiempo que se tarda en agregar todos los números a ambos conjuntos
 (para esto usar el método System.nanoTime()). Luego se comparará la cantidad de 
 elementos en común en ambos conjuntos. Esto se hará dos veces, en la primera se
@@ -357,7 +395,8 @@ recorren los elementos del \text{HashSet} y se pregunta al \textit{TreeSet} si
 contiene a ese elemento y en la segunda se recorren los elementos del 
 \textit{TreeSet} y se pregunta al \text{HashSet} si contiene a ese elemento.
 
-Para ello, se creará una clase ejecutable y los siguiente métodos de clase:
+Para ello, la clase \textit{SetExample} será ejecutable y contendrá los 
+siguientes métodos de clase:
 \begin{description}
   \item[fillSetWithRandomNumbers] Este método recibe tres parámetros: un 
   conjunto vacio, la cantidad de elementos a agregar al conjunto y el valor 
@@ -374,7 +413,7 @@ Para ello, se creará una clase ejecutable y los siguiente métodos de clase:
 \end{description}
 
 \subsection{Parte 3}
-La tercer clase que se creará será MapExample. Los mapas son estructuras de 
+La tercer clase que se creará será \textit{MapExample}. Los mapas son estructuras de 
 datos asociativas del tipo Clave $\rightarrow$ Valor, como un diccionario. 
 Map es, al igual que List, una interfaz. Las clases más usadas que implementan 
 Map son:
@@ -390,62 +429,70 @@ La declaración de tipo de los mapas también requiere usar el operador \textit{di
   // Mapa de enteros a enteros:
   Map<Integer,Integer> mapaDeEnterosAEnteros = new HashMap<>();
   // Mapa de enteros a palabras:
-  Map<Integer,String> mapaDeEnterosAEnteros = new HashMap<>();
+  Map<Integer,String> mapaDeEnterosAStrings = new HashMap<>();
 \end{lstlisting}
 
 Lós metodos más comunes de la interfaz \textit{Map} son:
 \begin{description}
-  \item[put] Agrega un nuevo par clave $\rightarrow$ valor o reemplaza uno 
+  \item[put] Agrega un nuevo par Clave $\rightarrow$ Valor o reemplaza uno 
   existente.
   \item[get] Recupera un valor a parte de la clave.
   \item[clear] Elimina todos los pares.
   \item[keySet] Devuelve un conjunto con todas claves.
-  \item[containsKey] Busca en el mapa si existe una clave dada.
-  \item[isEmpty] Pregunta si el mapa está vacio.
+  \item[containsKey] Comprueba si existe una clave dada en el mapa.
+  \item[isEmpty] Comprueba si el mapa está vacio.
 \end{description}
 
-En este ejemplo, se crearán 1000000 números enteros al azar entre uno y 1000000, 
-y se usará un \textit{Map} para almacenar la cantidad de veces que aparece cada 
-uno. Se mostrará el número más frecuente. Esto se repetirá unas 100 veces. El
-valor de la clave más frecuente en cada repetición se almacenará en otro mapa 
-(también de enteros a enteros). De forma tal que saber que cantidad de veces 
-cierto recuento fue el máximo. Finalmente, se mostrarán todos los pares 
-clave $\rightarrow$ valor de este segundo mapa. Para ello, se crearán los 
-métodos de clase:
+En este ejemplo, se crearán un millón de números enteros al azar entre uno y 
+un millóm, y se usará un \textit{Map} para almacenar la cantidad de veces que 
+aparece cada uno. Se mostrará el número más frecuente. Esto se repetirá cien 
+veces. El valor asociado con la clave más frecuente en cada repetición, es decir
+el mayor recuento, se almacenará en otro mapa (también de enteros a enteros). 
+De forma tal, que permitirá saber que cantidad de veces cierto recuento fue el 
+máximo. Finalmente, se mostrarán todos los pares Clave $\rightarrow$ Valor de 
+este segundo mapa. Para ello, se crearán los métodos de clase:
 
 \begin{description}
   \item[updateKeyCount] Este método recibe dos parámetros: un mapa de enteros a 
   enteros y un número entero. Se debe preguntar al mapa si el número entero dado 
-  existe. Si no existe, se agrega un núevo par con el número generado como clave
+  existe. Si no existe, se agrega un nuevo par con el número dado como clave
   y el número uno como valor; si existe, se incrementa en uno el valor asociado 
-  a ese número. Finalmente, se devuelve el mapa actualizado.
+  al número dado. Finalmente, se devuelve el mapa actualizado.
   \item[fillMapWithRandomNumbers] Este método recibe tres parámetros: un mapa de 
   enteros a enteros vacio, el número de elementos que hay que agregar al mapa y 
   el valor máximo para cualquier número. El método debe devolver el mapa lleno, 
   con los números generados como clave y el recuento como valor. Cuando se 
   genera un nuevo número al azar, 
   \item[getMostFrequentKey] Este método recibe un solo parámetro: un mapa de
-  enteros a enteros y devuelve la clave más frecuente. A mapa recibido se le 
-  pide el conjunto de claves y se lo recorre preguntando en cada paso si la 
-  clave actual es la más frecuente de las claves vistas.
-
+  enteros a enteros. Devuelve la clave asociada al mayor valor. Al mapa recibido
+  se le  pide el conjunto de claves y se lo recorre preguntando en cada paso si
+  el valor asociado a la clave actual es el mayor de las claves vistas.
 \end{description}
 
-Al igual que antes, se creará una clase ejecutable para hacer funcionar el 
-ejemplo. 
+Al igual que en la partes anteriores, \textit{MapExample} será una clase 
+ejecutable. 
+
+\subsection{Conceptos relacionados con el ejercicio}
+\begin{itemize}
+  \item Estructuras de datos comunes en Java.
+  \item Recorrido y consulta de las estructuras de datos.
+  \item Uso de clases genéricas.
+  \item Tipado de objetos por su interfaz.
+  \item Creación de números aleatorios.
+\end{itemize}
 
 \section{Ejercicio 3 - Juego de Hanoi}
 En este ejercicio se crearán clases que permitirán jugar al juego de las torres
 de Hanoi. En este juego hay discos de diferentes diámetros y un tablero con tres
 varillas (que cumplen el rol de torres). El juego se inicia con todos los 
 discos colocados en una de las varillas uno encima del otro tal que el diámetro
-de un discos debe ser menor al diametro del disco que se encuentra 
+de un disco debe ser menor al diametro del disco que se encuentra 
 inmediatamente debajo, si es que hay uno. El objetivo consiste en mover todos 
-los discos de una torre a otra, de tal forma que siempre se cumplan es reglas:
+los discos de una torre a otra, de tal forma que siempre se cumplan estas reglas:
 \begin{itemize}
   \item Se puede mover un solo disco a la vez.
   \item Los movimientos consisten en tomar un disco que se encuentra en la cima 
-  de una de las torre y colocarlo en la cima de una de las otras dos torres. 
+  de una de las torres y colocarlo en la cima de una de las otras dos torres. 
   \item No se puede colocar un disco sobre otro de menor tamaño.
 \end{itemize}
 
@@ -457,33 +504,33 @@ El modelo consistirá de las clases:
   \item[HanoiClient] Esta será la clase ejecutable que nos permitirá 
   interactuar con el juego.
 \end{description}
-Entre un el \textit{HanoiClient} y el \textit{BoardGame} se establecerá una 
-comunicación. El \textit{HanoiClient} solo podrá ordenarle a \textit{BoardGame} 
-que intente realizar un movimiento. Esto lo hará a través de la interfaz pública
-de \textit{BoardGame} y este le responderá según si el movimiento es válido,
-es inválido, o si es válido y además ganó el juego.
+Entre el \textit{HanoiClient} y el \textit{BoardGame} se establecerá una 
+comunicación. El \textit{HanoiClient} solo podrá hacer una cosa: ordenarle a 
+\textit{BoardGame} que intente realizar algún movimiento. Esto lo hará a través
+de la interfaz pública de \textit{BoardGame}. Este último le responderá según 
+si el movimiento es válido, es inválido, o si es válido y además ganó el juego.
 Las respuestas del \textit{BoardGame} se modelarán con la enumeración 
-\textit{BoardResponse} que contendrá tres valores: 'ILLEGAL_MOVE', 'VALID_MOVE',
-'YOU_WIN'. 
+\textit{BoardResponse} que contendrá tres valores: 'ILLEGAL\_MOVE', 
+'VALID\_MOVE' y 'YOU\_WIN'. 
 El tablero de juego tiene tres varillas, para modelar la posición que 
 corresponde a cada varilla se creará la enumeración \textit{BoardStacks}. Esta 
-tendrá tres valores: 'LEFT', 'MIDDLE', 'RIGHT'.
+tendrá tres valores: 'LEFT', 'MIDDLE' y 'RIGHT'.
 
 El estado interno de un \textit{BoardResponse} contendrá cinco variables.
-Una de ellas representará la cantidad de discos total en el juego.
-Tres se ellas representarán las varillas en la que se cololan los discos.
+Una de ellas representará la cantidad total de discos en el juego.
+Tres de ellas representarán las varillas en las que se cololan los discos.
 Una para la izquierda, otra para la del medio y otra para la derecha.
-La una de las varilla se reprenterá con una lista de discos 
+Cada una de las varillas se representará con una lista de discos 
 (\textit{List<Ring>}). El contenido de estas listas cambiará luego de cada 
-movimiento. Finalmente, la última variable del estado interno representará 
-la posición de la varilla en la que deben colocarse todos los discos para ganar
-el juego.
+movimiento. Finalmente, la última variable del estado interno representará la 
+posición de la varilla en la que deben colocarse todos los discos para ganar el
+juego.
 
 \textit{BoardResponse} contendrá los siguientes métodos públicos de instancia:
 \begin{description}
-  \item[move] Es el método que permite realizar los movimientos. Recibe dos
-  parámetros de tipo \textit{BoardStacks}, la posición desde la cual se toma el 
-  disco y la posición en la que se debe sejar el disco. Devuelve un valor de la 
+  \item[move] Permite realizar los movimientos. Recibe dos
+  parámetros de tipo \mbox{\textit{BoardStacks}}, la posición desde la cual se toma el 
+  disco y la posición en la que se debe dejar el disco. Devuelve un valor de la 
   enumeración \textit{BoardResponse}. Este método debera hacer lo siguiente:
   \begin{enumerate}
     \item Intentar tomar un disco de la varilla de posición inicial, si no es 
@@ -492,8 +539,8 @@ el juego.
     \item Intentar colocar el disco tomado en la la varilla de la posición 
     final. Si no es posible se deberá devolver una respuesta de
     movimiento ilegal y terminar.
-    \item Verificar si se ganó el juego, y devolver una respuesa de juego ganado
-    si es así y terminar.
+    \item Comprobar si se ganó el juego, si es así devolverá una respuesta  
+    indicando que se ganó el juego y terminar.
     \item Devolver una respuesta de movimiento válido. 
   \end{enumerate}
   \item[toString] Todos los objetos poseen este método, ya que lo heredan de
@@ -525,261 +572,437 @@ correcta:
   \end{itemize}
 \end{description}
 
-La clase \texit{HanoiClient} Será ejecutable y actuará de mediador entre el 
+La clase \textit{HanoiClient} Será ejecutable y actuará de mediador entre el 
 usuario humano y el juego. Es una clase que está separada del resto de las 
 clases del modelo del juego. Esto no es casual, es una decisión de diseño que 
 permitiría alterar la interfaz que interactúa con el humano sin tener que 
 modificar nada del comportamiento del juego. Es este caso, se usará una interfaz
-de línea de texto para jugar, pero si se quisiera, se podría construir otra 
-interfaz, por ejemplo gráfica y esto se podría hacer sin tener que modificar las
-clases \textit{BoardGame},y \textit{Ring}, ni las enumeraciones.
+de línea de comandos por texto para jugar, pero si se quisiera, se podría 
+construir otra interfaz, por ejemplo gráfica. Esto se podría hacer sin tener que
+modificar las clases \textit{BoardGame} y \textit{Ring}, ni las enumeraciones.
 
-Las personas interacturán con esta clase mediante comandos de texto. Los
-comandos de texto que se aceptarán son tres: 
+Las personas interactuarán con la clase \textit{HanoiClient} mediante comandos 
+de texto. Los comandos de texto que se aceptarán son de tres tipo: 
 \begin{itemize}
   \item MOVE \textit{X} TO \textit{X}. Donde X y Y se reemplazan por \textit{L},
   \textit{M} y \textit{R}, para denotar izquierda, centro y derecha. Por ejemplo,
-  un comando válido es:
-  \begin{verbatim}
-  MOVE R TO L
-  \end{verbatim}
+  un comando válido es: \texttt{MOVE R TO L} 
   \item END. Para finalizar el juego.
   \item RESTART. Para comenzar un juego nuevo, opcionalmente se le puede decir que cantidad de discos
   se quieren en el juego.
 \end{itemize}
-Para intepretar los comandos de texto se puede usarán la siguientes expresiones regulares:
-\begin{description}
-	\item[Move]    "\\s*MOVE\\s+(?<from>[LRM])\\s+TO\\s+(?<to>[LRM])\\s*"
-	\item[END]     "\\s*END\\s*"
-	\item[RESTART] "\\s*RESTART(\\s*(?<rings>[0-9]+))*"
-\end{description}
-El manejo de expresiones regulares en Java se hace mediante las clases \textit{Pattern} y \textit{Matcher}.
+Para intepretar los comandos de texto se usarán las expresiones que se
+muestran en la tabla \ref{tab:regexp:hanoi}
 
-La ejecución del juego se hace por medio de un bucle condicional (la condición que se evalúa es si se desea 
-terminar el juego) en el método \textit{main}. Dentro del bucle se llevan a cabo varias acciones en serie:
+\begin{table}
+\small
+\begin{center}
+\begin{tabular}{ll}
+Comando   & Expresión regular \\ \hline
+Move      & $\backslash\backslash$s*MOVE$\backslash\backslash$s+(?<from>[LRM])$\backslash\backslash$s+TO$\backslash\backslash$s+(?<to>[LRM])$\backslash\backslash$s* \\
+End       & $\backslash\backslash$s*END$\backslash\backslash$s*" \\
+Restart   & $\backslash\backslash$s*RESTART($\backslash\backslash$s*(?<rings>[0-9]+))* \\
+\end{tabular}
+\end{center}
+\caption{Expresiones regulares para los comandos}
+\normalsize
+\label{tab:regexp:hanoi}
+\end{table}
+% \begin{description}
+% \item[Move]    $\backslash\backslash$s*MOVE$\backslash\backslash$s+(?<from>[LRM])$\backslash\backslash$s+TO$\backslash\backslash$s+(?<to>[LRM])$\backslash\backslash$s*
+% \item[END]     $\backslash\backslash$s*END$\backslash\backslash$s*"
+% \item[RESTART] $\backslash\backslash$s*RESTART($\backslash\backslash$s*(?<rings>[0-9]+))*
+% \end{description}
+
+El manejo de expresiones regulares en Java se hace mediante las clases 
+\textit{Pattern} y \textit{Matcher}.
+
+La ejecución del juego se hace por medio de un bucle condicional (la condición
+que se evalúa es si se desea terminar el juego) en el método \textit{main}. 
+Dentro del bucle se llevan a cabo varias acciones en serie:
 \begin{enumerate}
-	\item Se crea el tablero para un juego nuevo si es necesario, y se muetra su estado inicial.
+	\item Se crea el tablero para un juego nuevo (si es necesario), y se muestra
+	su estado inicial.
 	\item Se lee una línea de texto del \textit{standard input} (la consola).
-	\item Se evalúa si el texto ingresado corresponde con alguna de las expresiones regulares de los comandos.
+	\item Se evalúa si el texto ingresado corresponde con alguna de las 
+	expresiones regulares de los comandos.
 	\item Si el texto corresponde con END, se termina la ejecución del programa.
-	\item Si el texto corresponde con RESTART, se reinicia el bucle del juego, indicando que se cree un nuevo tablero.
-	\item Si el texto corresponde con MOVE, se extraen los valores que corresponden a las posiciones de    inicio y fin de la expresión regular. Luego se llama al método \textit{move()} del tablero con usando los valores extraídos como parámetros.
-	\item Evaluar la respuesta obtenida del método \textit{move()}. Ejecutar un acción acorde a la respuesta obtenida.
-	\item Si el texto no corresponde con ninguna de las expresiones regulares, se muestra un mensaje que dice que no se puede reconocer el comando.
+	\item Si el texto corresponde con RESTART, se reinicia el bucle del juego, 
+	indicando que se cree un nuevo tablero.
+	\item Si el texto corresponde con MOVE, se extraen los valores que 
+	corresponden a las posiciones de inicio y fin de la expresión regular. Luego
+	se llama al método \textit{move()} del tablero con usando los valores 
+	extraídos como parámetros.
+	\item Evaluar la respuesta obtenida del método \textit{move()}. Ejecutar una
+	acción acorde a la respuesta.
+	\item Si el texto no corresponde con ninguna de las expresiones regulares, 
+	se muestra un mensaje que dice que no se puede reconocer el comando.
 \end{enumerate}
 
+\subsection{Conceptos relacionados con el ejercicio}
+\begin{itemize}
+  \item Uso de expresiones regulares.
+  \item Lectura y escritura en los \textit{buffers} \textit{standard}.
+  \item Lectura de texto por líneas (uso de la clase \textit{BufferedReader})
+  \item Separación de modelo e interfaz de usuario.
+  \item Sobremodelación.
+\end{itemize}
+
 \section{Ejercicio 4 - Mapa de rangos}
-En este ejercicio se escribirán las clases para construir una mapa de rangos.
-Al igual que los mapas comunes, los mapas de rango son asociaciones de tipo Clave $\rightarrow$ Valor, sin
-embargo, la clave no es explícita. Sino que se define un rango de elementos como clave, los cuales están 
-todos asociados al mismo valor. Por ejemplo, se puede asociar el rango $[0,10]$ al valor 'A', el rango 
-$[11,20]$ el valor B, etc. Los mapas siempre devuelven un único valor para cada clave, por ello, está
-implícito que los rangos no deben solaparse.
+En este ejercicio se escribirán las clases para construir un mapa de rangos.
+Al igual que los mapas comunes, los mapas de rango son asociaciones de tipo 
+Clave $\rightarrow$ Valor, sin embargo, la clave no es explícita. Sino que se 
+define un rango de elementos como clave, los cuales están todos asociados al 
+mismo valor. Por ejemplo, se puede asociar el rango $[0,10]$ al valor 'A', el 
+rango $[11,20]$ el valor B, etc. Los mapas siempre devuelven un único valor para
+cada clave, por ello, está implícito que los rangos no deben solaparse.
 
 \subsection{Primer parte}
-En la primer parte del ejercicio se escribirá una clase \textit{Range} especializada para almacenar rangos
-de números de punto flontante de doble precisión (\textit{Double}). El estado interno de esta clase tendrá
-dos variables que definirán el límite inferior y el límite superior del rango. 
-Además, es necesario indicar si los límites son cerrados o abiertos. Es decir si el valor del límite 
-pertenece al rango (cerrado) o no pertenece (abierto). Para ello, necesitaremos dos variables booleanas (una 
-para cada límite).
+En la primer parte del ejercicio se escribirá una clase \textit{Range} 
+especializada para almacenar rangos de números de punto flontante de doble 
+precisión (\textit{Double}). El estado interno de esta clase tendrá dos 
+variables que definirán el límite inferior y el límite superior del rango. 
+Además, es necesario indicar si los límites son cerrados o abiertos. Es decir si
+el valor del límite pertenece al rango (cerrado) o no pertenece (abierto). Para 
+ello, necesitaremos dos variables booleanas (una para cada límite).
 
-El método constructor de esta clase recibirá los cuatro valores que definen el estado interno. También se 
-deberá verificar que el límite inferior es menor o igual que el límite superior, si no lo es, se invertirá 
-el orden de los valores. \textit{Range} tendrá tres métodos de instancia:
+El método constructor de esta clase recibirá los cuatro valores que definen el
+estado interno. También se deberá verificar que el límite inferior es menor o 
+igual que el límite superior, si no lo es, se invertirá el orden de los valores.
+\textit{Range} tendrá tres métodos de instancia:
 \begin{description}
-	\item[constains] Verifica si una valor dada pertenece al rango. El método recibirá un solo parámetro, un 
-	\textit{Double} y debe devolver verdadero si el valor pertenece al rango y falso en caso contrario.
-	Debajo se muestra un código de ejemplo para la implementación de este método.
-	\item[intersects] Verifica si este rango comparte al menos un valor con otro rango dado. El método recibirá
-	un parámetro de tipo \texit{Range} y devolverá un verdadero si los rangos comparten al menos un valor o 
-	falso en caso contrario.
-	\item[toString] Redefinición del metodo heredado de \textit{Object} para representar el rango. Debe devolver un \textit{String} que contenga los dos valores, separados por una coma y encerrados con '(','[',')' o ']'. De acuerdo si el límite es cerrado ('[', ']') o abierto ('(', ')'). Por ejemplo:
+	\item[constains] Verifica si una valor dada pertenece al rango. El método 
+	recibirá un solo parámetro, un \textit{Double} y debe devolver verdadero si 
+	el valor pertenece al rango y falso en caso contrario. Debajo se muestra un
+	código de ejemplo para la implementación de este método.
+	\item[intersects] Verifica si este rango comparte al menos un valor con otro
+	rango dado. El método recibirá un parámetro de tipo \textit{Range} y 
+	devolverá un verdadero si los rangos comparten al menos un valor o falso en 
+	caso contrario.
+	\item[toString] Redefinición del metodo heredado de \textit{Object} para 
+	representar el rango. Debe devolver un \textit{String} que contenga los dos 
+	valores, separados por una coma y encerrados con (, [, ) o ]. De 
+	acuerdo si el límite es cerrado: [, ] o abierto: (, ). Por 
+	ejemplo:
 	\begin{itemize}
-	  \item [0,1] : Rango de todos los valores mayor o iguales a 0, y menores o iguales a 1.
-	  \item [2,3) : Rango de todos los valores mayor o iguales a 2, y menores a 3.
+	  \item \lbr 0,1\rbr: Rango de todos los valores mayor o iguales a 0, y menores o iguales a 1.
+	  \item \lbr 2,3\rpar: Rango de todos los valores mayor o iguales a 2, y menores a 3.
   \end{itemize}
   \item[getters and setters] Métodos para acceder a las variables del estado interno.
 \end{description}
 
 \subsection{Segunda parte}
-La clase \textit{Range} creada en el parte anterior funciona bien para \texit{Doubles}. 
-Sin embargo, si se quisiera usar con números enteros o caracteres u otro objetos no sería posible.
-Debería escribirse, ese esos casos, clases con comportamiento prácticamente idéntico, pero 
-especializada para cada tipo de datos.
+La clase \textit{Range} creada en el parte anterior funciona bien para 
+\textit{Double}. Sin embargo, si se quisiera usar con números enteros o 
+caracteres u otros objetos no sería posible. Debería escribirse, en esos casos,
+clases con comportamiento prácticamente idéntico, pero especializadas para cada 
+tipo de datos.
 
-En esta parte, se introucirá el concepto de variables de tipo genérico para poder escribir un única clase 
-\textit{Range} que sea capaz de utilizar a cualquier (o casi) tipo. Para hacer esto, se debe usar el operador
-\textit{Diamond}. En ejercicios anteriores, se lo utilizó para poder trabajar con clases genéricas (por ejemplo \textit{List}). Ahora se utilizará con otro fin, para escribir una clase genérica.
+En esta parte, se introducirá el concepto de variables de tipo genérico para 
+poder escribir un única clase \textit{Range} que sea capaz de utilizar a 
+cualquier (o casi) tipo. Para hacer esto, se debe usar el operador 
+\textit{Diamond}. En ejercicios anteriores, se lo utilizó para poder trabajar 
+con clases genéricas (por ejemplo \textit{List}). Ahora se utilizará con otro 
+fin, para escribir una clase genérica.
 
-La declaración de la clase \textit{Range} en la primer parte es:
+La declaración de la clase \textit{Range} en la primer parte fue:
 \begin{lstlisting}
-	public class Range {
-	  private Double upperBound;
-	  //... 
-	  public boolean contains(Double key) { 
-	  //...
-	  }
-	}
+  public class Range {
+    private Double upperBound;
+    //... 
+    public boolean contains(Double key) { 
+      //...
+    }
+  }
 \end{lstlisting}
 Ahora, la declaración de \textit{Range} podría ser:
 \begin{lstlisting}
-	public class Range<K> {
-	  private K upperBound;
-	  //... 
-	  public boolean contains(K key) { 
-	  //...
-	  }
-	}
+  public class Range<K> {
+    private K upperBound;
+    //... 
+    public boolean contains(K key) { 
+      //...
+    }
+  }
 \end{lstlisting}
-Nótese, que la variable de tipo genérico \texit{K}, está reemplazando a Double en todos los lugares donde 
-este aparecía. Con esta declaración \texit{K} podría ser cualquier tipo. Esto es beneficioso ya que permite
-escribir programas de forma abstracta, pero impone una limitación, como se es posible saber el tipo exacto de
-\texit{K}, todos los métodos específicos no estarán disponibles. Solo estarán disponibles los métodos 
-heredados de \textit{Object} y los operadores que pueden utilizar un \textit{Object} (implicitamente K 
-hereda de \textit{Object}). En este ejemplo, parece no ser 
-importante esta limitación, porque no se está utilizando ningún método de \texit{Double} en la clase 
-\textit{Range}. Sin embargo, se está haciendo uso de los operadores de comparación por mayor y menor ('>','<'), los cuales no están disponibles en \textit{Object} (no todos los objetos son comparables, aunque
-tengan el mismo tipo). Esto se traduce en que los objetos del tipo genérico K debe ser comparables entre si.
-Esto puede lograrse muy fácilmente en Java:
+Nótese, que la variable de tipo genérico \textit{K}, está reemplazando a Double 
+en todos los lugares donde este aparecía. Con esta declaración \textit{K} podría
+ser cualquier tipo. Esto es beneficioso ya que permite escribir programas de 
+forma abstracta, pero impone una limitación, como no es posible saber el tipo 
+exacto de \textit{K}, todos los métodos específicos no estarán disponibles. Solo
+estarán disponibles los métodos heredados de \textit{Object} y los operadores 
+que pueden utilizar un \textit{Object} (implicitamente \textit{K} hereda de 
+\textit{Object}). En este ejemplo, parece no ser importante esta limitación, 
+porque no se está utilizando ningún método de \textit{Double} en la clase 
+\textit{Range}. Sin embargo, se está haciendo uso de los operadores de 
+comparación por mayor y menor ( $>$ y $<$ ), los cuales no están disponibles en 
+\textit{Object} (no todos los objetos son comparables entre si).
+Esto significa que los objetos del tipo genérico \textit{K} deben poder  
+compararse los unos con los otros. Esto puede lograrse muy fácilmente en Java:
 \begin{lstlisting}
   public class Range<K extends Comparable<K>> {
   // ... código
   }
 \end{lstlisting}
-Aquí se introducen dos ideas. Por un lado, \texit{Comparable<K>} es un interfaz para explicitar que un objeto es comparable con otro (en este caso, \textit{K}). Por otro lado, la palabra reservada \texit{extends} se usa para indicar que un tipo hereda de otro. Por ejemplo, \textit{A extends B}, significa que la clase A es subclase de B. En concreto, en la nueva declaración de \textit{Range} se está exigiendo
-que los objetos de tipo \textit{K} sean comparables con otros objetos de tipo \textit{K}. Si se quisiera crear un rango de un tipo que no cumple esto, el programa no podrá compilarse y se obtendrá un mensaje de error. Será necesario además, cambiar algunas partes del código, en particular en los lugar donde se utilizan
-los operadores de comparación. En su lugar, se deben usar los métodos que provee la interfaz \texit{Comparable<K>} (esencialmente, el método \textit{compareTo}).
+Aquí se introducen dos ideas. Por un lado, \textit{Comparable<K>} es un interfaz
+para explicitar que un objeto es comparable con otro (en este caso, de tipo 
+\textit{K}). Por otro lado, la palabra reservada \textit{extends} se usa para 
+indicar que un tipo hereda de otro. Por ejemplo, \textit{A extends B}, significa
+que la clase A es subclase de B. En concreto, en la nueva declaración de 
+\textit{Range} se está exigiendo que los objetos de tipo \textit{K} sean 
+comparables con otros objetos de tipo \textit{K}. Si \textit{K} fuese 
+\textit{Integer}, entonces \textit{Integer} debería implementar la interfaz 
+\textit{Comparable<Integer>}. De hecho, eso es lo que sucede (ver referencia  
+en \url{http://docs.oracle.com/javase/7/docs/api/java/lang/Integer.html}). Si se
+quisiera crear un rango de un tipo que no cumple esto, el programa no podrá 
+compilarse y se obtendrá un mensaje de error. 
+
+Será necesario además, cambiar algunas partes del código, en particular en los 
+lugar donde se utilizan los operadores de comparación. En su lugar, se deben 
+usar los métodos que provee la interfaz \textit{Comparable<K>} (esencialmente, 
+el método \textit{compareTo()}).
 
 \subsection{Tercera parte}
-La clase \textit{Range} creada en la parte anterior se usará como base para la implementación de una clase 
-\textit{RangeMap}. Esta clase, asociará un valor para cada cada rango. El tipo de los valores devueltos por
-el mapa puede diferir al tipo del rango usado como clave. Por ello, la clase \textit{RangeMap} será genérica para el tipo de los rangos y para el tipo del los valores devueltos:
+La clase \textit{Range} creada en la parte anterior se usará como base para la 
+implementación de una clase \textit{RangeMap}. Esta clase, asociará un valor 
+para cada rango. El tipo de los valores devueltos por el mapa puede diferir
+al tipo del rango usado como clave. Por ello, la clase \textit{RangeMap} será 
+genérica para el tipo de los rangos y para el tipo de los valores devueltos:
 \begin{lstlisting}
   public class RangeMap<K extends Comparable<K>,V> {
   // ... código
   }
 \end{lstlisting}
-El tipo K corresponde a los rangos, y el tipo V, corresponde a los valores devueltos.
+El tipo \textit{K} corresponde a los rangos, y el tipo \textit{V}, corresponde a
+los valores devueltos. La implementación de esta clase será sencilla, se 
+mandendrán en el estado interno de \textit{RangeMap} dos listas. Una para los 
+rangos, otra para los valores. Las dos listas comienzan vacias y se van llenando
+a medida que se agregan datos al mapa. Siempre se agrega al misma tiempo un 
+rango y un valor, por lo que el índice de los pares (rango, valor) asociado son
+los mismos en ambas listas.
 
-La implementación de esta clase será sencilla, se mandendrán en el estado interno de \textit{RangeMap} dos listas. Una para los rangos, otra para los valores. Las dos listas comienzan vacias y se van llenando a medida que se agregan datos al mapa. Siempre se agrega al misma tiempo un rango y un valor, por lo que el índice de los pares (rango, valor) asociado son los mismos en ambas listas.
-
-El constructor de esta clase no recibirá parámetros, pero debe crear inicializar las listas del estado interno con listas vacias. Esta clase tendrá dos métodos de instancia:
+El constructor de esta clase no recibirá parámetros, pero debe crear inicializar
+las listas del estado interno con listas vacias. Esta clase tendrá dos métodos 
+de instancia:
 \begin{description}
-	\item[put] Recibe dos parámetros, un rango y un valor. No devuelve nada.
-	\item[get] Recibe un parámetro de tipo \textit{K}, devuelve el valor (de tipo \textit{V}) que está
-	 asociado al rango al cual pertenece el parámetro. Si no hay un rango al cual pertenezca el parámetro,
-	 se devolverá \textit{null}.
-\end{description}cr
+	\item[put] Recibe dos parámetros: un rango y un valor. No devuelve nada.
+	\item[get] Recibe un parámetro de tipo \textit{K}, devuelve el valor (de 
+	tipo \textit{V}) que está asociado al rango al cual pertenece el parámetro. 
+	Si el parámetro no pertenece a un rango, se devolverá \textit{null}.
+\end{description}
 
 \subsection{Parte Cuatro}
-La clase \textit{Range} es una posible solución a al problema planteado.
-Es posible crear otras clases lleven a caba la misma tarea que \textit{RangeMap} (en términos de 
-asociar rangos a valores) pero con implmentaciones muy diferentes. Del mismo modo que existen diferentes implementaciones de listas y conjuntos.
-Todas ellas, tendrán un método \textit{get} y otro \textit{put}, que harán lo mismo que su contraparte de
-\textit{RangeMap}. A pesar de todas estas similitudes, estas clases no pueden ser intercambiadas y representadas en forma abstrata. Para remediar esto, se puede crear una \textit{interface} que reuna los métodos comunes a estas clases . 
-La declaración de una \textit{interface} es muy similar a la de una clase:
+La clase \textit{Range} es una posible solución al problema planteado. Es 
+posible crear otras clases lleven a cabo la misma tarea que \textit{RangeMap} 
+(en términos de asociar rangos a valores) pero con implementaciones muy 
+diferentes. Del mismo modo que existen diferentes implementaciones de listas y 
+conjuntos. Todas ellas, tendrán un método \textit{get} y otro \textit{put}, que 
+harán lo mismo que su contraparte de \textit{RangeMap}. A pesar de todas estas
+similitudes, estas clases no pueden ser intercambiadas ni representadas en forma 
+abstracta. Para remediar esto, se puede crear una \textit{interface} que reuna 
+los métodos comunes a estas clases. La declaración de una \textit{interface} 
+es muy similar a la de una clase:
 \begin{lstlisting}
 public interface RangeMap <K extends Comparable<K>,V> {
 	public V put(Range<K> key, V value) ;
 	public V get(K key) ;
 }
 \end{lstlisting}
-Los métodos que se declaran en un \textit{interface} no contienen implementación. La implementación
-de los métodos está a cargo de las clases particulares que implementan la interfaz.
+Los métodos que se declaran en una \textit{interface} no contienen código. La 
+implementación de estos metodos queda a cargo de las clases particulares que 
+implementan la interfaz.
 
-La clase \textit{RangeMap} de la parte anterior se renombrará a \textit{ListRangeMap}.
-Luego se creará la interfaz \textit{RangeMap}, declarando los métodos (\textit{get} y otro \textit{put}).
-Finalmente, se modificará \textit{ListRangeMap}. Para ello, solo debe modificarse la declaración de la clase:
+La clase \textit{RangeMap} creada en la parte anterior se renombrará a 
+\textit{ListRangeMap}. Luego se creará la interfaz \textit{RangeMap}, declarando
+los métodos (\textit{get} y otro \textit{put}). Finalmente, se modificará 
+\textit{ListRangeMap} para indicar que utilice la interfaz \textit{RangeMap}. 
+Para ello, solo debe modificarse la declaración de la clase:
 \begin{lstlisting}
-public class ListRangeMap<K extends Comparable<K>,V> implements RangeMap<K , V> {
-// El mísmo código...
+public class ListRangeMap<K extends Comparable<K>,V> 
+                            implements RangeMap<K , V> {
+   // El mísmo código...
 }
 \end{lstlisting}
-La palabra clave \textit{implements} se usa para indicar que la clase implementa cierta interfaz.
+La palabra clave \textit{implements} se usa para indicar que la clase implementa
+una interfaz data. Una clase puede implementar más de una interfaz, a diferencia
+de los que sucede con la herencia. Una clase solo puede heredar de una única 
+otra clase.  
 
 \subsection{Código de ejemplo de los métodos \textit{contains} y \textit{intersects}}
 \begin{lstlisting}
-	public boolean contains(Double key) {
-			
-		Double upper = this.getUpperBound();
-		Double lower = this.getLowerBound();
-		
-		boolean res = (((key < upper) || (key == upper && this.isUpperClosed())) && 
-				           ((key > lower) || (key == upper && this.isLowerClosed())));
-		return res;
-	}
+public boolean contains(Double key) {
+  Double upper = this.getUpperBound();
+  Double lower = this.getLowerBound();
+  boolean res = (
+                 (
+                   (key < upper) || 
+                   (key == upper && this.isUpperClosed()
+                 )
+                ) && 
+                  (
+                   (key > lower) || 
+                   (key == upper && this.isLowerClosed())
+                  )
+                );
+  return res;
+}
 
-	public boolean intersects(Range otherRange) {
-		
-		Double lowerR1 = this.getLowerBound();
-		Double upperR1 = this.getUpperBound();
-		
-		Double lowerR2 = otherRange.getLowerBound();
-		Double upperR2 = otherRange.getUpperBound();
-		
-		boolean res = 
-		          ( 
-		            upperR2 > lowerR1 || 
-		            (upperR2 == lowerR1 &&  otherRange.isUpperClosed() && this.isLowerClosed())
-		          ) && ( 
-		            upperR1 > lowerR2 || 
-				        (upperR1 == lowerR2 &&  otherRange.isUpperClosed() && this.isLowerClosed())
-				      );
+public boolean intersects(Range otherRange) {
+  Double lowerR1 = this.getLowerBound();
+  Double upperR1 = this.getUpperBound();
+  Double lowerR2 = otherRange.getLowerBound();
+  Double upperR2 = otherRange.getUpperBound();
+  boolean res = 
+   ( 
+    upperR2 > lowerR1 || 
+     ( 
+       upperR2 == lowerR1 &&  
+       otherRange.isUpperClosed() && 
+       this.isLowerClosed()
+     )
+   ) && ( 
+    upperR1 > lowerR2 || 
+     (
+       upperR1 == lowerR2 && 
+       otherRange.isUpperClosed() && 
+       this.isLowerClosed()
+     )
+   );
 				
-		return res;
+  return res;
+}
 \end{lstlisting}
-\subsection{Parte Cinco}
-Teniendo declarada la \textit{interface} \textit{RangeMap}, se utilizará otra clase que la implemente.
-Los archivos AvlRangeMap.java, AvlRangeMapNode.java y LowerBoundRangeComparator.java contienen las clases necesarias para una implementación alternativa de \textit{RangeMap}. Esta implementación es batante más compleja que la anterior. Está basada en un árbol binario de búsqueda que tiene la propiedad de balancear la cantidad de nodos en sus ramas. Esta estructura de datos se conoce como árbol AVL (AVL, es la abreviatura de los nombres de los autores). No es necesario modificar el código de esta clase, salvo posiblemente verificar el nombre del paquete y de las clases importadas (son las primeras líneas del código, comienzan con \textit{package} e \textit{import}).
 
-Se escribirá una clase \textit{RangeMapExample} para evaluar las dos implementaciones de \textit{RangeMap}.
+\subsection{Parte Cinco}
+Teniendo declarada la \textit{interface} \textit{RangeMap}, se utilizará otra 
+clase que la implemente. Los archivos AvlRangeMap.java, AvlRangeMapNode.java y 
+LowerBoundRangeComparator.java contienen las clases necesarias para una 
+implementación alternativa de \textit{RangeMap}. Esta implementación es batante 
+más compleja que la anterior. Está basada en un árbol binario de búsqueda que
+tiene la propiedad de balancear la cantidad de nodos en sus ramas. Esta 
+estructura de datos se conoce como árbol AVL (AVL, es la abreviatura de los
+nombres de los autores). No es necesario modificar el código de esta clase, 
+salvo posiblemente verificar el nombre del paquete y de las clases importadas 
+(son las primeras líneas del código, comienzan con \textit{package} e 
+\textit{import}).
+
+Se escribirá una clase \textit{RangeMapExample} para evaluar las dos 
+implementaciones de \textit{RangeMap}.
+
+\subsection{Conceptos relacionados con el ejercicio}
+\begin{itemize}
+  \item Creación de una estructura de datos.
+  \item Creación de una clase genérica.
+  \item Creación de una \textit{interface}.
+\end{itemize}
 
 \section{Ejercicio 5 - Representación de mapas con precisión variable}
+En este ejercicio se crearán clases para representar un mapa (geográfico) con 
+precisión varibles. El objetivo es construir una estructura de datos que pueda
+describir con mucha precisión regiones del mapa con muchos detalles y con poca 
+precisión regiones que no tengan tanto detalle.
 
-En este ejercicio se crearán clases para representar un mapa (geográfico) con precisión varibles.
-El objetivo es construir una estructura de datos que pueda describir con mucha precisión regiones del
-mapa con mucho detalle y con poca precisión regiones que no tengan tanto detalle.
+Los mapas que se representarán son muy simples, serán siempre cuadrados y el 
+terreno del mapa puede ser tierra o agua. Es posible imaginar este mapa como una
+imagen cuadrada de dos colores. En esta representación usaremos celdas 
+unitarias. Las celdas unitarias son siempre cuadradas, pueden representar agua o
+tierra y el tamaño de la porción del terreno que representan es variable.
 
-Los mapas que se representarán son muy simples, serán siempre cuadrados y el terreno del mapa puede ser
-tierra o agua. Es posible imaginar este mapa como una imagen cuadrada de dos colores.
-En esta representación usaremos celdas unitarias. Las celdas unitarias son siempre cuadradas, pueden ser representar agua o tierra y el tamaño de la porción del terreno que representan es variable.
+Se podría representar el mapa entero con una sola celda unitaria, sin embargo,
+esto implicaría perder casi todo el detalle del mapa. La estrategia que se 
+utilizará será dividir el mapa en cuatro regiones: arriba a la derecha, arriba a
+la izquierda, abajo a la derecha y abajo a la izquierda. Cada una de estas 
+cuatro regiones podría ser una celda unitaria, si la presición es suficiente o
+podría dividirse nuevamente en cuatro. El proceso de división en cuatro puede
+continuar muchas veces, dando cada vez más y más detalle (ver figura 
+\ref{fig:terrain_map}).
 
-Se podría representar el mapa entero con una sola celda unitaria, sin embargo, esto implicaría perder casi todo el detalle del mapa. La estrategia que se utilizará será dividir el mapa en cuatro regiones: arriba a la derecha, arriba a la izquierda, abajo a la derecha y abajo a la izquierda. 
-Cada una de estas cuatro regiones podría ser una celda unitaria, si la presición es suficiente o
-puede dividirse nuevamente en cuatro. El proceso de división en cuatro puede continuar indefinidamente, dando cada vez más y más detalle.
+%\usepackage{graphics} is needed for \includegraphics
+\begin{figure}[htp]
+\begin{center}
+  \includegraphics[width=14cm]{images/terrain_map.pdf}
+  \caption{Subdivisión en cuatro de las regiones}
+  \label{fig:terrain_map}
+\end{center}
+\end{figure}
 
-Para modelar esta idea se escribirá la enumeración \textit{Terrain} que contiene tres valores:
-\textit{WATER}, \textit{LAND}, \textit{MIXED}. Además, se escribirán tres clases: \textit{Region}, \textit{Block} y \textit{UnitCell}.
+Para modelar esta idea se escribirá la enumeración \textit{Terrain} que contiene
+tres valores: \textit{WATER}, \textit{LAND}, \textit{MIXED}. Además, se 
+escribirán tres clases: \textit{Region}, \textit{Block} y \textit{UnitCell}.
 
-\textit{Region} es una clase abstracta. Las clases \textit{Block} y \textit{UnitCell} heredan de \textit{region}. \textit{Region} que contiene cuatro métodos abstractos:
+\textit{Region} es una clase abstracta. Las clases \textit{Block} y 
+\textit{UnitCell} heredan de \textit{Region}. \textit{Region} contiene 
+cuatro métodos abstractos:
 \begin{description}
   \item[simplify] Intenta simplificar la estructura del mapa.
-	\item[isBlock] Devuelve verdadero si el objeto es de la clase \textit{Block}.
-	\item[countElements] Devuelve la cantidad de elementos que hay en la estructura.
-	\item[getTarrain] Devuelve un valor que indica si todo el terreno representado por el objeto es agua, o tierra o una mezcla de ambos.
+  \item[isBlock] Devuelve verdadero si el objeto es de la clase \textit{Block}.
+  \item[countElements] Devuelve la cantidad de elementos que hay en la 
+  estructura.
+  \item[getTarrain] Devuelve un valor que indica si todo el terreno representado
+  por el objeto es agua, o tierra o una mezcla de ambos.
 \end{description}
 
-Las clases concretas \textit{Block} y \textit{UnitCell} deben implementar estos métodos.
-La clase \textit{UnitCell} representa a las celdas unitarias. El estado interno solo tiene una variable para
-representar el tipo terreno (agua o tierra).
-La implementación de la clase \textit{UnitCell} es bastante sencilla:
+En la figura \ref{fig:terrain:model} se muestra un diagrama de clases de para
+este modelo. Este modelo responde a un patrón de diseño llamado 
+\textit{composite}. En este patrón, los objetos se componen en estructuras 
+de árbol que permite tratar cada parte de manera uniforme.
+
+%\usepackage{graphics} is needed for \includegraphics
+\begin{figure}[htp]
+\begin{center}
+  \includegraphics[width=7cm]{images/terrain_model.pdf}
+  \caption{Diagrama de clases simplificado para este modelo.}
+  \label{fig:terrain:model}
+\end{center}
+\end{figure}
+
+Las clases concretas \textit{Block} y \textit{UnitCell} deben implementar estos 
+métodos. La clase \textit{UnitCell} representa a las celdas unitarias. Su estado
+interno solo tiene una variable. La cual representa el terreno y solo puede ser 
+agua o tierra, (no una una mezcla de ambos).
+
+La implementación de los métodos de la clase \textit{UnitCell} es bastante 
+sencilla:
 \begin{description}
-  \item[simplify] Se devuelve el objeto \textit{UnitCell}. No hay una estrucura más sencilla que una celda unitaria.
-	\item[isBlock] Devuelve falso.
-	\item[countElements] Una celda unitaria no contiene más elementos que ella misma, por lo tanto devuelve 1.
-	\item[getTarrain] Devuelve agua o tierra. 
+  \item[simplify] Se devuelve el mismo objeto \textit{UnitCell}. 
+  No hay una estrucura más sencilla que una celda unitaria, por lo tanto no 
+  puede simplificarse.
+  \item[isBlock] Devuelve falso.
+  \item[countElements] Una celda unitaria no contiene más elementos que ella 
+	  misma, por lo tanto sólo tiene que devolver el valor 1.
+  \item[getTarrain] Devuelve agua o tierra, dependiendo de su estado interno. 
 \end{description}
 
 La clase \textit{Block} representa a las divisiones en cuatro de una región.
-El estado interno tiene cuatro variables, una para cada subdivisión (arriba al derecha, arriba a la izquiera, etc). El tipo de estas variables es \textit{Region} (por lo tanto, cada subregión puede volver a subdividirse o no). La implementación de los métodos es más compleja:
+El estado interno tiene cuatro variables, una para cada subdivisión (arriba al 
+derecha, arriba a la izquiera, etc). El tipo de estas variables es 
+\textit{Region} (por lo tanto, cada subregión puede volver a subdividirse o no). 
+La implementación de los métodos es más compleja:
 
 \begin{description}
-  \item[simplify] Si el tipo de terreno de las cuatro subpartes es el mismo, se devuelve una celda unitaria del tipo de terreno que corresponde. Si no, intenta simplificar cada una de las subregiones.
-	\item[isBlock] Devuelve verdadero.
-	\item[countElements] Cuenta los elementos de las cuatro subpartes, los suma, le agrega 1 y devuelve ese valor.
-	\item[getTarrain] Pregunta a las cuatro subpartes el tipo de terreno. Si todas coinciden, devuelve el valor correspondiente (agua o tierra). De lo contrario, devuelve un valor que representa un tipo de terreno mezclado.
+  \item[simplify] Si el tipo de terreno de las cuatro subpartes es el mismo, 
+  se devuelve una celda unitaria del tipo de terreno que corresponde. Si no, 
+  intenta simplificar cada una de las subregiones.
+  \item[isBlock] Devuelve verdadero.
+  \item[countElements] Cuenta los elementos de las cuatro subpartes, los suma, 
+  le agrega 1 y devuelve ese valor.
+  \item[getTarrain] Pregunta a las cuatro subpartes el tipo de terreno. 
+  Si todas coinciden, devuelve el valor correspondiente (agua o tierra). 
+  De lo contrario, devuelve un valor que representa un tipo de terreno mezclado.
 \end{description}
+Los métodos \textit{simplify}, \textit{countElements} y \textit{getTarrain} son
+métodos recursivos. Es decir, métodos que se llaman a sí mismos. La resolución
+de problemas usando recursión es elegante y suele ser simple en varios casos, 
+pero tienen el inconveniente que puede consumir rápidamente la memoria del
+\textit{stack} si la recursión es muy profunda.
 
+
+
+\subsection{Conceptos relacionados con el ejercicio}
+\begin{itemize}
+  \item Estructuras recursivas.
+  \item Métodos recursivos.
+  \item Patrón de diseño: \textit{Composite}.
+\end{itemize}
 
 \end{document}
