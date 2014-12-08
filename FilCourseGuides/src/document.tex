@@ -996,13 +996,49 @@ de problemas usando recursión es elegante y suele ser simple en varios casos,
 pero tienen el inconveniente que puede consumir rápidamente la memoria del
 \textit{stack} si la recursión es muy profunda.
 
-
-
 \subsection{Conceptos relacionados con el ejercicio}
 \begin{itemize}
   \item Estructuras recursivas.
   \item Métodos recursivos.
   \item Patrón de diseño: \textit{Composite}.
 \end{itemize}
+
+\section{Librería para validar objetos}
+Este es un ejercicio adicional para desarrollar opcionalmente fuera del curso.
+El objetivo es escribir un conjunto de clases que permitan evaluar si uno o más 
+objetos cumplen ciertas condiciones. Se quiere encapsular el comportamiento de
+la evaluación en un objeto, del tal forma que este pueda ser reusado o 
+modificada por el usuario. Llamaremos a estos objetos Condiciones.
+
+También se requiere que poder evaluar las condiciones en forma combinada con 
+operaciones lógicas. Si se tienen dos Condiciones, A y B, se quiere
+poder construir un objeto que represente la unión lógica de A y B ( $A 
+\wedge B$, que cumpla A y que cumpla B), otro que represente la disjunción 
+lógica ($A \vee B$), y otro para la negación lógica ($~A$). También se debe 
+poder representar la combinación de estas operaciones. 
+
+Para probar la librería, se creará una clase ejecutable que:
+\begin{itemize}
+  \item Genere conjuntos de cinco números entero entre 1 y 100 al azar. 
+  \item Escriba un número dados de estos conjuntos a un archivo de texto. De
+  forma tal que cada línea de texto corresponda a un conjunto.
+\end{itemize}
+Luego se creará otra clase ejecutable que :
+\begin{itemize}
+  \item Leerá el archivo de texto generado por la clase anterior.
+  \item Reconstruirá los conjuntos de números.
+  \item Filtrará (eliminará) aquellos conjuntos que:
+  \begin{itemize}
+    \item Todos sus números sean menor a 80.
+    \item Todos sus números sean impares.
+    \item Pero, debe mantener aquellos que cumplen las dos condiciones 
+    anteriores.
+  \end{itemize}
+  \item Luego se imprimirán los conjuntos no filtrados.
+\end{itemize}
+  
+Por último, el usuario debe poder definir algunas condiciones en un archivo de 
+texto. El programa debe ser capaz de leer este archivo y filtrar los conjuntos
+de números de acuerdo a ellas.
 
 \end{document}
